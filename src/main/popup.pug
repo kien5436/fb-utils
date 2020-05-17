@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="popup.css")
+  body
+    - const options = ['Block the "seen" feature of the chat', 'Block the "delivery receipts" feature of the chat', 'Block the typing indicator feature of the chat', 'Hide your active status']
+
+    ul
+      - for (let i = 0; i < options.length; i++)
+        li
+          label.checkbox
+            input.option(type="checkbox", value=i)
+            span= options[i]
+    script(src="popup.js")
