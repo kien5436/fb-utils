@@ -11,6 +11,8 @@ Adds some awesome features to control Facebook
 - [x] Hide your active status
 - [x] Remove Facebook click identifier (fbclid)
 - [x] Block "seen" feature of the story
+- [x] Block Facebook pixel
+- [x] Stop up next video playing automatically
 
 ## Installation
 
