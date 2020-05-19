@@ -6,6 +6,7 @@ const options = {
   1: 'block_delivery_receipts',
   2: 'block_typing_indicator',
   3: 'hide_active_status',
+  4: 'block_seen_story',
 };
 
 window.addEventListener('DOMContentLoaded', () => {

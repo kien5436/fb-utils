@@ -63,6 +63,17 @@ browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.hi
 // block linkclick analysis
 browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: true }), { urls: ['https://*.facebook.com/si/linkclick/ajax_callback/'] }, ['blocking']);
 
+// block story seen on FB
+browser.webRequest.onBeforeRequest.addListener(details => {
+
+  const seenRequests = ['MessengerMarkReadMutation', 'storiesUpdateSeenStateMutation'];
+
+  if (details.requestBody.formData && details.requestBody.formData.fb_api_req_friendly_name && seenRequests.includes(details.requestBody.formData.fb_api_req_friendly_name[0]))
+    return { cancel: settings.block_seen_story };
+}, {
+  urls: ['https://*.facebook.com/api/graphql/*']
+}, ['blocking', 'requestBody']);
+
 browser.runtime.onMessage.addListener(handleMessage);
 
 function loadSettings() {

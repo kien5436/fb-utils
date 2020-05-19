@@ -10,6 +10,7 @@ Adds some awesome features to control Facebook
 - [x] Block the typing indicator feature of the chat
 - [x] Hide your active status
 - [x] Remove Facebook click identifier (fbclid)
+- [x] Block "seen" feature of the story
 
 ## Installation
 
