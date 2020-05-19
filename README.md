@@ -2,13 +2,14 @@
 Adds some awesome features to control Facebook
 
 ## Build status
-[![Build Status](https://img.shields.io/badge/add--on-v1.0-brightgreen?style=for-the-badge)]()
+[![Build Status](https://img.shields.io/amo/v/facebook-utils?color=brightgreen&label=add-on&style=for-the-badge)](https://addons.mozilla.org/en-US/firefox/addon/facebook-utils/)
 
 ## Features
 - [x] Block "seen" feature of the chat
 - [x] Block the "delivery receipts" feature of the chat
 - [x] Block the typing indicator feature of the chat
 - [x] Hide your active status
+- [x] Remove Facebook click identifier (fbclid)
 
 ## Installation
 

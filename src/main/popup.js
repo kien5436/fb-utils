@@ -1,28 +1,6 @@
 import './popup.scss';
 import './popup.pug';
 
-// browser.tabs.executeScript({
-//         allFrames: true,
-//         code: `document.addEventListener('click', function(e) {
-
-//     e.preventDefault();
-
-//     if ('A' === e.target.tagName) {
-
-//         const link = e.target;
-//         const params = new URLSearchParams(link.search.substring(1));
-
-//         if (params.has('fbclid')) params.delete('fbclid');
-
-//         link.search = '?' + params.toString();
-
-//         window.open(link.href);
-//     }
-// }, false);`
-//     })
-//     .then(() => console.info('remove fbclid'))
-//     .catch(console.error);
-
 const options = {
   0: 'block_seen',
   1: 'block_delivery_receipts',

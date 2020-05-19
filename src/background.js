@@ -60,6 +60,9 @@ browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.hi
   ]
 }, ['blocking']);
 
+// block linkclick analysis
+browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: true }), { urls: ['https://*.facebook.com/si/linkclick/ajax_callback/'] }, ['blocking']);
+
 browser.runtime.onMessage.addListener(handleMessage);
 
 function loadSettings() {
