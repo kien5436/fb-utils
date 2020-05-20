@@ -63,6 +63,31 @@ browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.hi
 // block linkclick analysis
 browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: true }), { urls: ['https://*.facebook.com/si/linkclick/ajax_callback/'] }, ['blocking']);
 
+// remove fbclid
+browser.webRequest.onBeforeRequest.addListener(details => {
+  // console.info(`background.js:68: `, details.url)
+
+  const url = new URL(details.url);
+
+  if ('GET' === details.method && url.searchParams.has('fbclid')) {
+
+    url.searchParams.delete('fbclid');
+
+    return { redirectUrl: url.href };
+  }
+
+}, {
+  urls: ['*://*/*'],
+  types: ['main_frame']
+}, ['blocking']);
+
+// block FB pixel
+browser.webRequest.onBeforeRequest.addListener(details => {
+  console.info(`background.js:86: blocked fb pixel`)
+
+  return { cancel: settings.block_fb_pixel }
+}, { urls: ['https://connect.facebook.net/*/fbevents.js'] }, ['blocking']);
+
 // block story seen on FB
 browser.webRequest.onBeforeRequest.addListener(details => {
 
@@ -73,6 +98,11 @@ browser.webRequest.onBeforeRequest.addListener(details => {
 }, {
   urls: ['https://*.facebook.com/api/graphql/*']
 }, ['blocking', 'requestBody']);
+
+// stop up next video
+browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.stop_up_next_video }), {
+  urls: ['https://*.facebook.com/video/tahoe/video_data/*']
+}, ['blocking']);
 
 browser.runtime.onMessage.addListener(handleMessage);
 

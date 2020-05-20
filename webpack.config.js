@@ -9,7 +9,6 @@ module.exports = {
   entry: {
     background: './src/background.js',
     'main/popup': './src/main/popup.js',
-    'content-scripts/remove-fbclid': './src/content-scripts/remove-fbclid.js',
   },
   output: {
     filename: '[name].js',

@@ -1,16 +1,23 @@
+@import '~bulma/sass/utilities/initial-variables.sass';
+@import '~bulma/sass/utilities/derived-variables.sass';
+@import '~bulma/sass/base/minireset.sass';
+@import '~bulma/sass/components/menu.sass';
+@import '~bulma/sass/layout/footer.sass';
+
 body {
-  align-items: center;
   display: flex;
   justify-content: center;
-  width: 26em;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5em 1.5em 4em 1.5em;
 }
 
-ul {
-  padding: .5em 1em
+.menu {
+  overflow: auto;
+  max-height: 15em;
 }
 
 li {
-  list-style-type: none;
   font-size: 0.9em;
 
   &:not(:last-child) {
@@ -20,10 +27,13 @@ li {
 
 .checkbox {
   position: relative;
-  cursor: pointer;
 
   input[type='checkbox'] {
     display: none
+  }
+
+  span {
+    padding-left: 2em
   }
 
   &:before {
@@ -34,14 +44,28 @@ li {
     height: 1em;
     border: 1px solid #000;
     top: 0;
-    left: -2em;
+    left: 0;
     border-radius: 3px;
   }
 
   &.is-checked:after {
     content: '\2713\0020';
     position: absolute;
-    top: 0;
-    left: -1.75em;
+    top: -.2rem;
+    left: 0;
+    font-size: 1.2em;
   }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #e3e3e3;
+  padding: 1rem 1.5rem;
+  width: 100%;
+}
+
+.has-text-centered {
+  text-align: center
 }

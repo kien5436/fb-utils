@@ -5,8 +5,10 @@ const options = {
   0: 'block_seen',
   1: 'block_delivery_receipts',
   2: 'block_typing_indicator',
-  3: 'hide_active_status',
-  4: 'block_seen_story',
+  3: 'block_seen_story',
+  4: 'hide_active_status',
+  5: 'block_fb_pixel',
+  6: 'stop_up_next_video',
 };
 
 window.addEventListener('DOMContentLoaded', () => {

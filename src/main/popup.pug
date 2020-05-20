@@ -5,12 +5,40 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel="stylesheet", href="popup.css")
   body
-    - const options = ['Block the "seen" feature of the chat', 'Block the "delivery receipts" feature of the chat', 'Block the typing indicator feature of the chat', 'Hide your active status', 'Block the "seen" feature of the story']
+    -
+      const options = [
+        'Block the "seen" feature of the chat',
+        'Block the "delivery receipts" feature of the chat',
+        'Block the typing indicator feature of the chat',
+        'Block the "seen" feature of the story',
+        'Hide your active status',
+        'Block Facebook pixel',
+        'Stop "up next" video',
+      ]
 
-    ul
-      - for (let i = 0; i < options.length; i++)
+    .menu
+      p.menu-label activity
+      ul.menu-list
+        - for (let i = 0; i < 5; i++)
+          li
+            label.checkbox.is-checked
+              input.option(type="checkbox", value=i)
+              span= options[i]
+      p.menu-label privacy
+      ul.menu-list
         li
           label.checkbox
-            input.option(type="checkbox", value=i)
-            span= options[i]
+            input.option(type="checkbox", value=5)
+            span= options[5]
+      p.menu-label other
+      ul.menu-list
+        li
+          label.checkbox
+            input.option(type="checkbox", value=6)
+            span= options[6]
+
+    footer.footer
+      .content.has-text-centered
+        a(href='https://addons.mozilla.org/en-US/firefox/addon/facebook-utils/') Rate me
+
     script(src="popup.js")
