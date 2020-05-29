@@ -1,7 +1,9 @@
 const { resolve } = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   // mode: 'development',
@@ -33,7 +35,15 @@ module.exports = {
         },
         'pug-html-loader'
       ],
-    }]
+    }, {
+      test: /\.(woff2?|ttf|eot|svg)$/,
+      use: [{
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]'
+        }
+      }]
+    }, ]
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -47,7 +57,35 @@ module.exports = {
   ],
   optimization: {
     splitChunks: {
-      chunks: 'all'
+      chunks: 'all',
+      //   // cacheGroups: {
+      //   //   vendors: {
+      //   //     chunks: 'initial',
+      //   //     name(module) {
+
+      //   //       const moduleName = module.identifier().split('/').reduceRight(item => item.replace(/\.js$/, '')).toLowerCase();
+
+      //   //       return `main/${moduleName}`;
+      //   //     },
+      //   //     test: /node_modules/,
+      //   //     enforce: true,
+      //   //   },
+      //   // }
     },
+    minimizer: [
+      new TerserJSPlugin({
+        cache: true,
+        parallel: true,
+        extractComments: false,
+        terserOptions: {
+          ecma: 2015,
+        }
+      }),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+      })
+    ],
   }
 };

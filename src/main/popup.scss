@@ -4,11 +4,30 @@
 @import '~bulma/sass/components/menu.sass';
 @import '~bulma/sass/layout/footer.sass';
 
+$family-sans-serif: 'Nunito', sans-serif;
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/Nunito-400.woff2) format('woff2'),
+    url(../fonts/Nunito-400.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 700;
+  src: url(../fonts/Nunito-700.woff2) format('woff2'),
+    url(../fonts/Nunito-700.woff) format('woff');
+}
+
 body {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: $family-sans-serif;
+  justify-content: center;
   padding: 1.5em 1.5em 4em 1.5em;
 }
 
@@ -68,4 +87,9 @@ li {
 
 .has-text-centered {
   text-align: center
+}
+
+.has-scrollbar {
+  scrollbar-color: dark;
+  scrollbar-width: thin;
 }

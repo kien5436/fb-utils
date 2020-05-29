@@ -27,7 +27,11 @@ browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.bl
 }, ['blocking']);
 
 // block last active time
-browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.hide_active_status }), {
+browser.webRequest.onBeforeRequest.addListener(details => {
+  console.info(`background.js:31: hide_active_status`, details)
+
+  return ({ cancel: settings.hide_active_status })
+}, {
   urls: [
     '*://edge-chat.facebook.com/*',
     '*://0-edge-chat.facebook.com/*',
@@ -82,11 +86,7 @@ browser.webRequest.onBeforeRequest.addListener(details => {
 }, ['blocking']);
 
 // block FB pixel
-browser.webRequest.onBeforeRequest.addListener(details => {
-  console.info(`background.js:86: blocked fb pixel`)
-
-  return { cancel: settings.block_fb_pixel }
-}, { urls: ['https://connect.facebook.net/*/fbevents.js'] }, ['blocking']);
+browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_fb_pixel }), { urls: ['https://connect.facebook.net/*'] }, ['blocking']);
 
 // block story seen on FB
 browser.webRequest.onBeforeRequest.addListener(details => {

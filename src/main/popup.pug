@@ -16,7 +16,7 @@ html(lang="en")
         'Stop "up next" video',
       ]
 
-    .menu
+    .menu.has-scrollbar
       p.menu-label activity
       ul.menu-list
         - for (let i = 0; i < 5; i++)
@@ -41,4 +41,4 @@ html(lang="en")
       .content.has-text-centered
         a(href='https://addons.mozilla.org/en-US/firefox/addon/facebook-utils/') Rate me
 
-    script(src="popup.js")
+    script(async src='popup.js')
