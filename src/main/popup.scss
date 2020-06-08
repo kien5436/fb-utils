@@ -1,11 +1,3 @@
-@import '~bulma/sass/utilities/initial-variables.sass';
-@import '~bulma/sass/utilities/derived-variables.sass';
-@import '~bulma/sass/base/minireset.sass';
-@import '~bulma/sass/components/menu.sass';
-@import '~bulma/sass/layout/footer.sass';
-
-$family-sans-serif: 'Nunito', sans-serif;
-
 @font-face {
   font-family: 'Nunito';
   font-style: normal;
@@ -22,6 +14,14 @@ $family-sans-serif: 'Nunito', sans-serif;
     url(../fonts/Nunito-700.woff) format('woff');
 }
 
+@import '~bulma/sass/utilities/initial-variables.sass';
+@import '~bulma/sass/utilities/derived-variables.sass';
+@import '~bulma/sass/base/minireset.sass';
+@import '~bulma/sass/components/menu.sass';
+@import '~bulma/sass/layout/footer.sass';
+
+$family-sans-serif: 'Nunito', sans-serif;
+
 body {
   align-items: center;
   display: flex;
@@ -37,7 +37,7 @@ body {
 }
 
 li {
-  font-size: 0.9em;
+  font-size: .97em;
 
   &:not(:last-child) {
     margin-bottom: .5rem
@@ -56,23 +56,24 @@ li {
   }
 
   &:before {
+    border-radius: 3px;
+    border: 1px solid #000;
     content: '';
     display: block;
-    position: absolute;
-    width: 1em;
     height: 1em;
-    border: 1px solid #000;
-    top: 0;
     left: 0;
-    border-radius: 3px;
+    position: absolute;
+    top: .15rem;
+    width: 1em;
   }
 
   &.is-checked:after {
-    content: '\2713\0020';
-    position: absolute;
-    top: -.2rem;
-    left: 0;
+    content: '\2714';
+    font-family: $family-sans-serif;
     font-size: 1.2em;
+    left: 0;
+    position: absolute;
+    top: -.1rem;
   }
 }
 

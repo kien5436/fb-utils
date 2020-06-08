@@ -23,7 +23,20 @@ module.exports = {
       use: [
         MiniCssExtractPlugin.loader,
         'css-loader',
-        'sass-loader'
+        {
+          loader: 'resolve-url-loader',
+          options: {
+            join(uri, base) {
+
+            }
+          }
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+          }
+        }
       ]
     }, {
       test: /\.pug$/,
@@ -40,7 +53,7 @@ module.exports = {
       use: [{
         loader: 'file-loader',
         options: {
-          name: 'fonts/[name].[ext]'
+          name: '[folder]/[name].[ext]'
         }
       }]
     }, ]
