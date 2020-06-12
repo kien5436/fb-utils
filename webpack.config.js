@@ -22,21 +22,11 @@ module.exports = {
       test: /\.s?[ac]ss$/,
       use: [
         MiniCssExtractPlugin.loader,
-        'css-loader',
         {
-          loader: 'resolve-url-loader',
-          options: {
-            join(uri, base) {
-
-            }
-          }
+          loader: 'css-loader',
+          options: { url: false }
         },
-        {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: true,
-          }
-        }
+        'sass-loader'
       ]
     }, {
       test: /\.pug$/,
@@ -48,15 +38,7 @@ module.exports = {
         },
         'pug-html-loader'
       ],
-    }, {
-      test: /\.(woff2?|ttf|eot|svg)$/,
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: '[folder]/[name].[ext]'
-        }
-      }]
-    }, ]
+    }]
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -65,6 +47,7 @@ module.exports = {
       patterns: [
         { from: './src/manifest.json', to: '[name].[ext]' },
         { from: './src/icons/*', to: 'icons/[name].[ext]' },
+        { from: './src/fonts/*', to: '[folder]/[name].[ext]' },
       ]
     }),
   ],
