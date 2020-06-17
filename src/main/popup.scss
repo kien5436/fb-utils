@@ -14,33 +14,59 @@
     url(../fonts/Nunito-700.woff) format('woff');
 }
 
-@import '~bulma/sass/utilities/initial-variables.sass';
-@import '~bulma/sass/utilities/derived-variables.sass';
+@import '~bulma/sass/utilities/_all';
 @import '~bulma/sass/base/minireset.sass';
+@import '~bulma/sass/base/helpers.sass';
+@import '~bulma/sass/elements/button.sass';
+@import '~bulma/sass/elements/icon.sass';
 @import '~bulma/sass/components/menu.sass';
+@import '~bulma/sass/components/level.sass';
+@import '~bulma/sass/components/tabs.sass';
 @import '~bulma/sass/layout/footer.sass';
+@import '~bulma/sass/form/shared.sass';
+@import '~bulma/sass/form/tools.sass';
+@import 'font-awesome';
 
 $family-sans-serif: 'Nunito', sans-serif;
 
 body {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
   font-family: $family-sans-serif;
-  justify-content: center;
+
+  >.tabs {
+    margin: unset !important;
+
+    a:hover {
+      cursor: pointer
+    }
+  }
+}
+
+.content-block {
+
   padding: 1.5em 1.5em 4em 1.5em;
+
+  &.is-flex {
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &.has-scrollbar {
+    max-height: 20em;
+    overflow: auto;
+  }
 }
 
 .menu {
   overflow: auto;
   max-height: 15em;
-}
 
-li {
-  font-size: .97em;
+  li {
+    font-size: .97em;
 
-  &:not(:last-child) {
-    margin-bottom: .5rem
+    &:not(:last-child) {
+      margin-bottom: .5rem
+    }
   }
 }
 
@@ -84,10 +110,6 @@ li {
   background-color: #e3e3e3;
   padding: 1rem 1.5rem;
   width: 100%;
-}
-
-.has-text-centered {
-  text-align: center
 }
 
 .has-scrollbar {

@@ -6,11 +6,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-  // mode: 'development',
   mode: 'production',
   entry: {
     background: './src/background.js',
     'main/popup': './src/main/popup.js',
+    'content-scripts/facebook': './src/content-scripts/facebook.js',
   },
   output: {
     filename: '[name].js',
@@ -47,7 +47,7 @@ module.exports = {
       patterns: [
         { from: './src/manifest.json', to: '[name].[ext]' },
         { from: './src/icons/*', to: 'icons/[name].[ext]' },
-        { from: './src/fonts/*', to: '[folder]/[name].[ext]' },
+        { from: './src/fonts/*.(woff|woff2)', to: '[folder]/[name].[ext]' },
       ]
     }),
   ],

@@ -1,3 +1,10 @@
+mixin tab(props = {})
+  li(class=attributes.class)
+    a(data-content=props.for)
+      span.icon.is-small
+        i(class=props.icon)
+      span= props.title
+
 <!DOCTYPE html>
 html(lang="en")
   head
@@ -5,37 +12,54 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel="stylesheet", href="popup.css")
   body
-    -
-      const options = [
-        'Block the "seen" feature of the chat',
-        'Block the "delivery receipts" feature of the chat',
-        'Block the typing indicator feature of the chat',
-        'Block the "seen" feature of the story',
-        'Hide your active status',
-        'Block Facebook pixel',
-        'Stop "up next" video',
-      ]
+    .tabs
+      ul
+        +tab({
+          for: 'options-content',
+          icon: 'icon-tasks',
+          title: 'Options'
+        })(class='is-active')
+        +tab({
+          for: 'download-videos-fb-content',
+          icon: 'icon-download',
+          title: 'Download Facebook stories'
+        })
 
-    .menu.has-scrollbar
-      p.menu-label activity
-      ul.menu-list
-        - for (let i = 0; i < 4; i++)
-          li
-            label.checkbox.is-checked
-              input.option(type="checkbox", value=i)
-              span= options[i]
-      p.menu-label privacy
-      ul.menu-list
-        li
-          label.checkbox
-            input.option(type="checkbox", value=5)
-            span= options[5]
-      p.menu-label other
-      ul.menu-list
-        li
-          label.checkbox
-            input.option(type="checkbox", value=6)
-            span= options[6]
+    .content
+      ul#download-videos-fb-content.content-block.has-scrollbar.is-hidden
+
+      -
+        const options = [
+          'Block the "seen" feature of the chat',
+          'Block the "delivery receipts" feature of the chat',
+          'Block the typing indicator feature of the chat',
+          'Block the "seen" feature of the story',
+          'Hide your active status',
+          'Block Facebook pixel',
+          'Stop "up next" video',
+        ]
+
+      #options-content.content-block.is-flex
+        .menu.has-scrollbar
+          p.menu-label activity
+          ul.menu-list
+            - for (let i = 0; i < 4; i++)
+              li
+                label.checkbox.is-checked
+                  input.option(type="checkbox", value=i)
+                  span= options[i]
+          p.menu-label privacy
+          ul.menu-list
+            li
+              label.checkbox
+                input.option(type="checkbox", value=5)
+                span= options[5]
+          p.menu-label other
+          ul.menu-list
+            li
+              label.checkbox
+                input.option(type="checkbox", value=6)
+                span= options[6]
 
     footer.footer
       .content.has-text-centered

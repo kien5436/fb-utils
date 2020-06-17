@@ -105,6 +105,12 @@ browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.st
 }, ['blocking']);
 
 browser.runtime.onMessage.addListener(handleMessage);
+browser.webNavigation.onHistoryStateUpdated.addListener(details => {
+
+  if (!details.url.includes('stories'))
+    localStorage.removeItem('videos');
+
+}, { url: [{ urlMatches: 'https://www.facebook.com/*' }] });
 
 function loadSettings() {
 
