@@ -37,6 +37,7 @@ html(lang="en")
           'Hide your active status',
           'Block Facebook pixel',
           'Stop "up next" video',
+          'Collapse comments (experimental)',
         ]
 
       #options-content.content-block.is-flex
@@ -56,10 +57,12 @@ html(lang="en")
                 span= options[5]
           p.menu-label other
           ul.menu-list
-            li
-              label.checkbox
-                input.option(type="checkbox", value=6)
-                span= options[6]
+            - for (let i = 6; i < 8; i++)
+              li
+                label.checkbox
+                  input.option(type="checkbox", value=i)
+                  span= options[i]
+          p.is-size-7.has-text-danger.mt-4 Experimental features may cause unexpected behavior, be careful when using and feel free to report bugs to me
 
     footer.footer
       .content.has-text-centered

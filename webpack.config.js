@@ -10,7 +10,8 @@ module.exports = {
   entry: {
     background: './src/background.js',
     'main/popup': './src/main/popup.js',
-    'content-scripts/facebook': './src/content-scripts/facebook.js',
+    'content-scripts/fb': './src/content-scripts/fb.js',
+    'content-scripts/fb-remove-comments': './src/content-scripts/fb-remove-comments.js',
   },
   output: {
     filename: '[name].js',

@@ -31,6 +31,7 @@ $family-sans-serif: 'Nunito', sans-serif;
 
 body {
   font-family: $family-sans-serif;
+  max-width: 23.75em;
 
   >.tabs {
     margin: unset !important;
@@ -115,4 +116,8 @@ body {
 .has-scrollbar {
   scrollbar-color: dark;
   scrollbar-width: thin;
+}
+
+.mt-4 {
+  margin-top: 1rem
 }

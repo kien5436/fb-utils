@@ -28,7 +28,7 @@ browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.bl
 
 // block last active time
 browser.webRequest.onBeforeRequest.addListener(details => {
-  console.info(`background.js:31: hide_active_status`, details)
+  // console.info(`background.js:31: hide_active_status`, details)
 
   return ({ cancel: settings.hide_active_status })
 }, {
@@ -127,6 +127,19 @@ function loadSettings() {
 
 function handleMessage(message) {
 
-  if ('change settings' === message)
+  if (message.changeSettings) {
+
     settings = loadSettings();
+
+    if (settings.collapse_comments) {
+
+      for (let i = message.tabIds.length; --i >= 0;)
+        browser.tabs.reload(message.tabIds[i]);
+
+      browser.contentScripts.register({
+        matches: ['https://*.facebook.com/*'],
+        js: [{ file: '/content-scripts/fb-remove-comments.js' }],
+      });
+    }
+  }
 }

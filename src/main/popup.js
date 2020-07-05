@@ -10,6 +10,7 @@ const options = {
   4: 'hide_active_status',
   5: 'block_fb_pixel',
   6: 'stop_up_next_video',
+  7: 'collapse_comments',
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -25,7 +26,28 @@ window.addEventListener('DOMContentLoaded', () => {
 
       checkTheBox(el);
       localStorage.setItem(options[el.value], el.checked);
-      browser.runtime.sendMessage('change settings');
+
+      if ('collapse_comments' === options[el.value] && el.checked) {
+
+        browser.tabs.query({
+            currentWindow: true,
+            url: 'https://*.facebook.com/*',
+          })
+          .then(tabs => {
+
+            const tabIds = tabs.map(tab => tab.id);
+
+            browser.runtime.sendMessage({
+              changeSettings: true,
+              tabIds
+            });
+          })
+          .catch(console.error);
+      }
+      else
+        browser.runtime.sendMessage({
+          changeSettings: true,
+        });
     }, false);
   });
 
@@ -85,7 +107,7 @@ function getVideoUrlFb() {
         }
       }
 
-      return browser.tabs.executeScript({ file: '/content-scripts/facebook.js' });
+      return browser.tabs.executeScript({ file: '/content-scripts/fb.js' });
     })
     .catch(console.error);
 }
