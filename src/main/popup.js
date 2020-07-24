@@ -10,7 +10,7 @@ const options = {
   4: 'hide_active_status',
   5: 'block_fb_pixel',
   6: 'stop_up_next_video',
-  7: 'collapse_comments',
+  7: 'hide_comments',
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
       checkTheBox(el);
       localStorage.setItem(options[el.value], el.checked);
 
-      if ('collapse_comments' === options[el.value] && el.checked) {
+      if ('hide_comments' === options[el.value] && el.checked) {
 
         browser.tabs.query({
             currentWindow: true,
@@ -199,7 +199,7 @@ function notifNoVideo() {
   const downloadContent = document.getElementById('download-videos-fb-content');
   const p = createElement('p', { class: 'empty has-text-centered' });
 
-  p.innerText = 'No stories are available';
+  p.innerHTML = 'No stories are available<br>Try to open a story';
   downloadContent.innerHTML = '';
   downloadContent.append(p);
 }

@@ -109,8 +109,18 @@ browser.webNavigation.onHistoryStateUpdated.addListener(details => {
 
   if (!details.url.includes('stories'))
     localStorage.removeItem('videos');
-
 }, { url: [{ urlMatches: 'https://www.facebook.com/*' }] });
+
+// hide comments
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => {
+
+  if (settings.hide_comments)
+    browser.tabs.executeScript(tabId, {
+      file: '/content-scripts/fb-remove-comments.js',
+      runAt: 'document_end'
+    });
+
+}, { urls: ['https://www.facebook.com/*'] });
 
 function loadSettings() {
 
@@ -131,7 +141,7 @@ function handleMessage(message) {
 
     settings = loadSettings();
 
-    if (settings.collapse_comments) {
+    if (settings.hide_comments) {
 
       for (let i = message.tabIds.length; --i >= 0;)
         browser.tabs.reload(message.tabIds[i]);
@@ -139,6 +149,7 @@ function handleMessage(message) {
       browser.contentScripts.register({
         matches: ['https://*.facebook.com/*'],
         js: [{ file: '/content-scripts/fb-remove-comments.js' }],
+        runAt: 'document_end',
       });
     }
   }
