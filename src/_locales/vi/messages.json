@@ -1,0 +1,26 @@
+{
+  "extensionName": { "message": "Facebook utils" },
+  "description": { "message": "Biến Facebook thành của bạn" },
+  "tabOptions": { "message": "Tùy chọn" },
+  "tabDownload": { "message": "Tải story Facebook" },
+  "menuLabelActivity": { "message": "hoạt động" },
+  "menuLabelPrivacy": { "message": "quyền riêng tư" },
+  "menuLabelOther": { "message": "khác" },
+  "rate": { "message": "Đánh giá cho mình" },
+  "caution": { "message": "Các tính năng thử nghiệm có thể gây ra hành vi không mong muốn, hãy cẩn thận khi sử dụng và thoải mái báo cáo lỗi cho mình" },
+  "noVideo": { "message": "Không có câu chuyện nào có sẵn <br> Hãy thử mở một câu chuyện" },
+  "storyAuthor": {
+    "message": "Câu chuyện của $author$",
+    "placeholders": { "author": { "content": "$1" } }
+  },
+  "download": { "message": "Tải xuống" },
+  "openLink": { "message": "Mở trong thẻ mới" },
+  "blockSeen": { "message": "Chặn \"đã xem\" trong cuộc trò chuyện" },
+  "blockDeliveryReceipts": { "message": "Chặn \"đã gửi\" trong cuộc trò chuyện" },
+  "blockTypingIndicator": { "message": "Chặn \"đang gõ\" trong cuộc trò chuyện" },
+  "blockSeenStory": { "message": "Chặn \"đã xem\" trong story" },
+  "hideActiveStatus": { "message": "Ẩn trạng thái hoạt động" },
+  "blockFbPixel": { "message": "Chặn mã theo dõi Facebook pixel" },
+  "stopUpNextVideo": { "message": "Chặn tự động phát video tiếp theo" },
+  "hideComments": { "message": "Ẩn bình luận (thử nghiệm)" }
+}

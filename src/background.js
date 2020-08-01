@@ -1,156 +1,156 @@
-let settings = loadSettings();
+import storage from './storage';
 
-// block chat seen
-browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_seen }), {
-  urls: [
-    '*://*.facebook.com/*change_read_status*',
-    '*://*.messenger.com/*change_read_status*',
-  ]
-}, ['blocking']);
+(async () => {
+  let settings = await storage.get();
 
-// block typing indicator
-browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_typing_indicator }), {
-  urls: [
-    '*://*.facebook.com/*typ.php*',
-    '*://*.messenger.com/*typ.php*',
-  ]
-}, ['blocking']);
+  // block chat seen
+  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_seen }), {
+    urls: [
+      '*://*.facebook.com/*change_read_status*',
+      '*://*.messenger.com/*change_read_status*',
+    ]
+  }, ['blocking']);
 
-// block delivery receipts
-browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_delivery_receipts }), {
-  urls: [
-    '*://*.facebook.com/*delivery_receipts*',
-    '*://*.messenger.com/*delivery_receipts*',
-    '*://*.facebook.com/*unread_threads*',
-    '*://*.messenger.com/*unread_threads*',
-  ]
-}, ['blocking']);
+  // block typing indicator
+  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_typing_indicator }), {
+    urls: [
+      '*://*.facebook.com/*typ.php*',
+      '*://*.messenger.com/*typ.php*',
+    ]
+  }, ['blocking']);
 
-// block last active time
-browser.webRequest.onBeforeRequest.addListener(details => {
-  // console.info(`background.js:31: hide_active_status`, details)
+  // block delivery receipts
+  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_delivery_receipts }), {
+    urls: [
+      '*://*.facebook.com/*delivery_receipts*',
+      '*://*.messenger.com/*delivery_receipts*',
+      '*://*.facebook.com/*unread_threads*',
+      '*://*.messenger.com/*unread_threads*',
+    ]
+  }, ['blocking']);
 
-  return ({ cancel: settings.hide_active_status })
-}, {
-  urls: [
-    '*://edge-chat.facebook.com/*',
-    '*://0-edge-chat.facebook.com/*',
-    '*://1-edge-chat.facebook.com/*',
-    '*://2-edge-chat.facebook.com/*',
-    '*://3-edge-chat.facebook.com/*',
-    '*://4-edge-chat.facebook.com/*',
-    '*://5-edge-chat.facebook.com/*',
-    '*://6-edge-chat.facebook.com/*',
-    '*://7-edge-chat.facebook.com/*',
-    '*://8-edge-chat.facebook.com/*',
-    '*://9-edge-chat.facebook.com/*',
-    '*://www.facebook.com/ajax/chat/*',
-    '*://www.facebook.com/chat/*',
-    '*://www.facebook.com/ajax/presence/*',
-    '*://edge-chat.messenger.com/*',
-    '*://0-edge-chat.messenger.com/*',
-    '*://1-edge-chat.messenger.com/*',
-    '*://2-edge-chat.messenger.com/*',
-    '*://3-edge-chat.messenger.com/*',
-    '*://4-edge-chat.messenger.com/*',
-    '*://5-edge-chat.messenger.com/*',
-    '*://6-edge-chat.messenger.com/*',
-    '*://7-edge-chat.messenger.com/*',
-    '*://8-edge-chat.messenger.com/*',
-    '*://9-edge-chat.messenger.com/*',
-    '*://www.messenger.com/ajax/chat/*',
-    '*://www.messenger.com/chat/*',
-    '*://www.messenger.com/ajax/presence/*',
-  ]
-}, ['blocking']);
+  // block last active time
+  browser.webRequest.onBeforeRequest.addListener(details => {
+    // console.info(`background.js:31: hide_active_status`, details)
 
-// block linkclick analysis
-browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: true }), { urls: ['https://*.facebook.com/si/linkclick/ajax_callback/'] }, ['blocking']);
+    return ({ cancel: settings.hide_active_status })
+  }, {
+    urls: [
+      '*://edge-chat.facebook.com/*',
+      '*://0-edge-chat.facebook.com/*',
+      '*://1-edge-chat.facebook.com/*',
+      '*://2-edge-chat.facebook.com/*',
+      '*://3-edge-chat.facebook.com/*',
+      '*://4-edge-chat.facebook.com/*',
+      '*://5-edge-chat.facebook.com/*',
+      '*://6-edge-chat.facebook.com/*',
+      '*://7-edge-chat.facebook.com/*',
+      '*://8-edge-chat.facebook.com/*',
+      '*://9-edge-chat.facebook.com/*',
+      '*://www.facebook.com/ajax/chat/*',
+      '*://www.facebook.com/chat/*',
+      '*://www.facebook.com/ajax/presence/*',
+      '*://edge-chat.messenger.com/*',
+      '*://0-edge-chat.messenger.com/*',
+      '*://1-edge-chat.messenger.com/*',
+      '*://2-edge-chat.messenger.com/*',
+      '*://3-edge-chat.messenger.com/*',
+      '*://4-edge-chat.messenger.com/*',
+      '*://5-edge-chat.messenger.com/*',
+      '*://6-edge-chat.messenger.com/*',
+      '*://7-edge-chat.messenger.com/*',
+      '*://8-edge-chat.messenger.com/*',
+      '*://9-edge-chat.messenger.com/*',
+      '*://www.messenger.com/ajax/chat/*',
+      '*://www.messenger.com/chat/*',
+      '*://www.messenger.com/ajax/presence/*',
+    ]
+  }, ['blocking']);
 
-// remove fbclid
-browser.webRequest.onBeforeRequest.addListener(details => {
-  // console.info(`background.js:68: `, details.url)
+  // block linkclick analysis
+  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: true }), { urls: ['https://*.facebook.com/si/linkclick/ajax_callback/'] }, ['blocking']);
 
-  const url = new URL(details.url);
+  // remove fbclid
+  browser.webRequest.onBeforeRequest.addListener(details => {
 
-  if ('GET' === details.method && url.searchParams.has('fbclid')) {
+    const url = new URL(details.url);
 
-    url.searchParams.delete('fbclid');
+    if ('GET' === details.method && url.searchParams.has('fbclid')) {
 
-    return { redirectUrl: url.href };
-  }
+      url.searchParams.delete('fbclid');
 
-}, {
-  urls: ['*://*/*'],
-  types: ['main_frame']
-}, ['blocking']);
-
-// block FB pixel
-browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_fb_pixel }), { urls: ['https://connect.facebook.net/*'] }, ['blocking']);
-
-// block story seen on FB
-browser.webRequest.onBeforeRequest.addListener(details => {
-
-  const seenRequests = ['MessengerMarkReadMutation', 'storiesUpdateSeenStateMutation'];
-
-  if (details.requestBody.formData && details.requestBody.formData.fb_api_req_friendly_name && seenRequests.includes(details.requestBody.formData.fb_api_req_friendly_name[0]))
-    return { cancel: settings.block_seen_story };
-}, {
-  urls: ['https://*.facebook.com/api/graphql/*']
-}, ['blocking', 'requestBody']);
-
-// stop up next video
-browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.stop_up_next_video }), {
-  urls: ['https://*.facebook.com/video/tahoe/video_data/*']
-}, ['blocking']);
-
-browser.runtime.onMessage.addListener(handleMessage);
-browser.webNavigation.onHistoryStateUpdated.addListener(details => {
-
-  if (!details.url.includes('stories'))
-    localStorage.removeItem('videos');
-}, { url: [{ urlMatches: 'https://www.facebook.com/*' }] });
-
-// hide comments
-browser.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => {
-
-  if (settings.hide_comments)
-    browser.tabs.executeScript(tabId, {
-      file: '/content-scripts/fb-remove-comments.js',
-      runAt: 'document_end'
-    });
-
-}, { urls: ['https://www.facebook.com/*'] });
-
-function loadSettings() {
-
-  const settings = {};
-
-  for (let i = localStorage.length; --i >= 0;) {
-
-    const key = localStorage.key(i);
-    settings[key] = 'true' === localStorage.getItem(key);
-  }
-
-  return settings;
-}
-
-function handleMessage(message) {
-
-  if (message.changeSettings) {
-
-    settings = loadSettings();
-
-    if (settings.hide_comments) {
-
-      for (let i = message.tabIds.length; --i >= 0;)
-        browser.tabs.reload(message.tabIds[i]);
-
-      browser.contentScripts.register({
-        matches: ['https://*.facebook.com/*'],
-        js: [{ file: '/content-scripts/fb-remove-comments.js' }],
-        runAt: 'document_end',
-      });
+      return { redirectUrl: url.href };
     }
+
+  }, {
+    urls: ['*://*/*'],
+    types: ['main_frame']
+  }, ['blocking']);
+
+  // block FB pixel
+  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_fb_pixel }), { urls: ['https://connect.facebook.net/*'] }, ['blocking']);
+
+  // block story seen on FB
+  browser.webRequest.onBeforeRequest.addListener(details => {
+
+    const seenRequests = ['MessengerMarkReadMutation', 'storiesUpdateSeenStateMutation'];
+
+    if (details.requestBody.formData && details.requestBody.formData.fb_api_req_friendly_name && seenRequests.includes(details.requestBody.formData.fb_api_req_friendly_name[0]))
+      return { cancel: settings.block_seen_story };
+  }, {
+    urls: ['https://*.facebook.com/api/graphql/*']
+  }, ['blocking', 'requestBody']);
+
+  // stop up next video
+  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.stop_up_next_video }), {
+    urls: ['https://*.facebook.com/video/tahoe/video_data/*']
+  }, ['blocking']);
+
+  browser.webNavigation.onHistoryStateUpdated.addListener(details => {
+
+    if (!details.url.includes('stories'))
+      localStorage.removeItem('videos');
+  }, { url: [{ urlMatches: 'https://www.facebook.com/*' }] });
+
+  // hide comments
+  browser.tabs.onUpdated.addListener((tabId, { url: changedUrl }, { url: currentUrl }) => {
+
+    const url = new URL(changedUrl || currentUrl);
+
+    if (settings.hide_comments && !url.pathname.startsWith('/messages'))
+      browser.tabs.executeScript(tabId, {
+        file: '/content-scripts/fb-remove-comments.js',
+        runAt: 'document_end'
+      });
+
+  }, { urls: ['https://www.facebook.com/*'] });
+
+  storage.onChanged.addListener(onChanged);
+
+  async function onChanged(changes, area) {
+
+    try {
+      settings = await storage.get();
+
+      if (changes.hide_comments && changes.hide_comments.newValue) {
+
+        const tabs = await browser.tabs.query({
+          currentWindow: true,
+          url: 'https://*.facebook.com/*',
+        });
+        const tabIds = tabs.map(tab => tab.id);
+
+        for (let i = tabIds.length; --i >= 0;)
+          browser.tabs.reload(tabIds[i]);
+
+        browser.contentScripts.register({
+          excludeMatches: ['https://*.facebook.com/messages/*'],
+          matches: ['https://*.facebook.com/*'],
+          js: [{ file: '/content-scripts/fb-remove-comments.js' }],
+          runAt: 'document_end',
+        });
+      }
+    }
+    catch (err) { console.error(err); }
   }
-}
+})();

@@ -3,7 +3,7 @@ mixin tab(props = {})
     a(data-content=props.for)
       span.icon.is-small
         i(class=props.icon)
-      span= props.title
+      span(data-trans=props.title)
 
 <!DOCTYPE html>
 html(lang="en")
@@ -17,55 +17,29 @@ html(lang="en")
         +tab({
           for: 'options-content',
           icon: 'icon-tasks',
-          title: 'Options'
+          title: 'tabOptions'
         })(class='is-active')
         +tab({
           for: 'download-videos-fb-content',
           icon: 'icon-download',
-          title: 'Download Facebook stories'
+          title: 'tabDownload'
         })
 
     .content
       ul#download-videos-fb-content.content-block.has-scrollbar.is-hidden
 
-      -
-        const options = [
-          'Block the "seen" feature of the chat',
-          'Block the "delivery receipts" feature of the chat',
-          'Block the typing indicator feature of the chat',
-          'Block the "seen" feature of the story',
-          'Hide your active status',
-          'Block Facebook pixel',
-          'Stop "up next" video',
-          'Hide comments (experimental)',
-        ]
-
       #options-content.content-block.is-flex
         .menu.has-scrollbar
-          p.menu-label activity
+          p.menu-label(data-trans='menuLabelActivity')
           ul.menu-list
-            - for (let i = 0; i < 4; i++)
-              li
-                label.checkbox.is-checked
-                  input.option(type="checkbox", value=i)
-                  span= options[i]
-          p.menu-label privacy
+          p.menu-label(data-trans='menuLabelPrivacy')
           ul.menu-list
-            li
-              label.checkbox
-                input.option(type="checkbox", value=5)
-                span= options[5]
-          p.menu-label other
+          p.menu-label(data-trans='menuLabelOther')
           ul.menu-list
-            - for (let i = 6; i < 8; i++)
-              li
-                label.checkbox
-                  input.option(type="checkbox", value=i)
-                  span= options[i]
-          p.is-size-7.has-text-danger.mt-4 Experimental features may cause unexpected behavior, be careful when using and feel free to report bugs to me
+          p.is-size-7.has-text-danger.mt-4(data-trans='caution')
 
     footer.footer
       .content.has-text-centered
-        a(href='https://addons.mozilla.org/en-US/firefox/addon/facebook-utils/') Rate me
+        a(href='https://addons.mozilla.org/en-US/firefox/addon/facebook-utils/' data-trans='rate')
 
     script(async src='popup.js')

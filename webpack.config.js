@@ -20,6 +20,13 @@ module.exports = {
   },
   module: {
     rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: { cacheDirectory: true, }
+      }
+    }, {
       test: /\.s?[ac]ss$/,
       use: [
         MiniCssExtractPlugin.loader,
@@ -47,7 +54,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: './src/manifest.json', to: '[name].[ext]' },
-        { from: './src/icons/*', to: 'icons/[name].[ext]' },
+        { from: './src/_locales/**', to: '_locales/[folder]/[name].[ext]' },
+        { from: './src/icons/*', to: '[folder]/[name].[ext]' },
         { from: './src/fonts/*.(woff|woff2)', to: '[folder]/[name].[ext]' },
       ]
     }),
@@ -55,28 +63,12 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks: 'all',
-      //   // cacheGroups: {
-      //   //   vendors: {
-      //   //     chunks: 'initial',
-      //   //     name(module) {
-
-      //   //       const moduleName = module.identifier().split('/').reduceRight(item => item.replace(/\.js$/, '')).toLowerCase();
-
-      //   //       return `main/${moduleName}`;
-      //   //     },
-      //   //     test: /node_modules/,
-      //   //     enforce: true,
-      //   //   },
-      //   // }
     },
     minimizer: [
       new TerserJSPlugin({
         cache: true,
         parallel: true,
         extractComments: false,
-        terserOptions: {
-          ecma: 2015,
-        }
       }),
       new OptimizeCSSAssetsPlugin({
         cssProcessorPluginOptions: {

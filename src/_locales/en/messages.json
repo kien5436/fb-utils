@@ -1,0 +1,26 @@
+{
+  "extensionName": { "message": "Facebook utils" },
+  "description": { "message": "Make Facebook yours" },
+  "tabOptions": { "message": "Options" },
+  "tabDownload": { "message": "Download Facebook stories" },
+  "menuLabelActivity": { "message": "activity" },
+  "menuLabelPrivacy": { "message": "privacy" },
+  "menuLabelOther": { "message": "other" },
+  "rate": { "message": "Rate me" },
+  "caution": { "message": "Experimental features may cause unexpected behavior, be careful when using and feel free to report bugs to me" },
+  "noVideo": { "message": "No stories are available<br>Try to open a story" },
+  "storyAuthor": {
+    "message": "$author$'s story",
+    "placeholders": { "author": { "content": "$1" } }
+  },
+  "download": { "message": "Download" },
+  "openLink": { "message": "Open in new tab" },
+  "blockSeen": { "message": "Block the \"seen\" feature of the chat" },
+  "blockDeliveryReceipts": { "message": "Block the \"delivery receipts\" feature of the chat" },
+  "blockTypingIndicator": { "message": "Block the typing indicator feature of the chat" },
+  "blockSeenStory": { "message": "Block the \"seen\" feature of the story" },
+  "hideActiveStatus": { "message": "Hide your active status" },
+  "blockFbPixel": { "message": "Block Facebook pixel" },
+  "stopUpNextVideo": { "message": "Stop \"up next\" video" },
+  "hideComments": { "message": "Hide comments (experimental)" }
+}

@@ -1,6 +1,6 @@
 {
   "name": "fb-utils",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -9,6 +9,9 @@
     "pack-src": "zip -r -FS source.zip src INSTRUCTIONS.md package.json webpack.config.js yarn.lock"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.1",
     "css-loader": "^3.5.3",

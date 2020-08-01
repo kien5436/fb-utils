@@ -1,54 +1,48 @@
 import './popup.scss';
 import './popup.pug';
 import { createElement } from './dom';
+import storage from '../storage';
 
 const options = {
-  0: 'block_seen',
-  1: 'block_delivery_receipts',
-  2: 'block_typing_indicator',
-  3: 'block_seen_story',
-  4: 'hide_active_status',
-  5: 'block_fb_pixel',
-  6: 'stop_up_next_video',
-  7: 'hide_comments',
+  block_seen: browser.i18n.getMessage('blockSeen'),
+  block_delivery_receipts: browser.i18n.getMessage('blockDeliveryReceipts'),
+  block_typing_indicator: browser.i18n.getMessage('blockTypingIndicator'),
+  block_seen_story: browser.i18n.getMessage('blockSeenStory'),
+  hide_active_status: browser.i18n.getMessage('hideActiveStatus'),
+  block_fb_pixel: browser.i18n.getMessage('blockFbPixel'),
+  stop_up_next_video: browser.i18n.getMessage('stopUpNextVideo'),
+  hide_comments: browser.i18n.getMessage('hideComments'),
 };
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
 
-  document.querySelectorAll('.option').forEach(el => {
+  renderOptions();
 
-    const checkStatus = 'true' === localStorage.getItem(options[el.value]);
-    el.checked = checkStatus || false;
+  document.querySelectorAll('.option').forEach(async el => {
 
-    checkTheBox(el);
+    const option = el.value;
 
     el.addEventListener('click', () => {
 
       checkTheBox(el);
-      localStorage.setItem(options[el.value], el.checked);
 
-      if ('hide_comments' === options[el.value] && el.checked) {
-
-        browser.tabs.query({
-            currentWindow: true,
-            url: 'https://*.facebook.com/*',
-          })
-          .then(tabs => {
-
-            const tabIds = tabs.map(tab => tab.id);
-
-            browser.runtime.sendMessage({
-              changeSettings: true,
-              tabIds
-            });
-          })
-          .catch(console.error);
-      }
-      else
-        browser.runtime.sendMessage({
-          changeSettings: true,
+      try {
+        storage.save({
+          [option]: el.checked
         });
+      }
+      catch (err) { console.error(err); }
     }, false);
+
+    try {
+      const {
+        [option]: opt
+      } = await storage.get(option);
+      el.checked = opt || false;
+
+      checkTheBox(el);
+    }
+    catch (err) { console.error(err); }
   });
 
   document.querySelectorAll('.tabs a').forEach(el => {
@@ -71,6 +65,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (contentId === 'download-videos-fb-content') getVideoUrlFb();
     }, false);
+  });
+
+  document.querySelectorAll('[data-trans]').forEach(el => {
+
+    el.innerText = browser.i18n.getMessage(el.getAttribute('data-trans'));
   });
 }, false);
 
@@ -142,7 +141,7 @@ function createVideoItem(videoUrl, author) {
   const levelRight = createElement('div', { class: 'level-right' });
 
   const lvlLeftItem = createElement('div', { class: 'level-item' });
-  lvlLeftItem.innerText = `${author}'s story`;
+  lvlLeftItem.innerText = browser.i18n.getMessage('storyAuthor', author);
   levelLeft.append(lvlLeftItem);
 
   const lvlRightItem = createElement('div', { class: 'level-item' });
@@ -153,7 +152,7 @@ function createVideoItem(videoUrl, author) {
   const btnDown = createElement('button', {
     class: 'button',
     type: 'button',
-    title: 'Download',
+    title: browser.i18n.getMessage('download'),
   });
   const iconBox1 = createElement('span', { class: 'icon is-small' });
   const iconDown = createElement('i', { class: 'icon-download' });
@@ -172,7 +171,7 @@ function createVideoItem(videoUrl, author) {
   const a = createElement('a', {
     class: 'button',
     target: '_blank',
-    title: 'Open in new tab',
+    title: browser.i18n.getMessage('openLink'),
     rel: 'noopener noreferrer',
     href: videoUrl,
   });
@@ -199,7 +198,50 @@ function notifNoVideo() {
   const downloadContent = document.getElementById('download-videos-fb-content');
   const p = createElement('p', { class: 'empty has-text-centered' });
 
-  p.innerHTML = 'No stories are available<br>Try to open a story';
+  p.innerHTML = browser.i18n.getMessage('noVideo');
   downloadContent.innerHTML = '';
   downloadContent.append(p);
+}
+
+function renderOptions() {
+
+  const menuLists = document.getElementsByClassName('menu-list');
+  const fragmentActivity = new DocumentFragment();
+  const fragmentPrivacy = new DocumentFragment();
+  const fragmentOther = new DocumentFragment();
+  const optionKeys = Object.keys(options);
+
+  for (let i = 0; i < 4; i++)
+    fragmentActivity.append(renderOption(optionKeys[i]));
+
+  fragmentPrivacy.append(renderOption(optionKeys[5]));
+
+  for (let i = 6; i < 8; i++)
+    fragmentOther.append(renderOption(optionKeys[i]));
+
+  menuLists[0].append(fragmentActivity);
+  menuLists[1].append(fragmentPrivacy);
+  menuLists[2].append(fragmentOther);
+}
+
+/**
+ * render option \<li>\</li> block
+ * @param {string} value options's value
+ */
+function renderOption(value) {
+
+  const li = createElement('li');
+  const label = createElement('label', { class: 'checkbox' });
+  const checkbox = createElement('input', {
+    class: 'option',
+    type: 'checkbox',
+    value,
+  });
+  const span = createElement('span');
+
+  span.innerText = options[value];
+  label.append(checkbox, span);
+  li.append(label);
+
+  return li;
 }
