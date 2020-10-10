@@ -5,7 +5,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 
-const manifestExtraInfo = require('./src/manifest/manifest-chrome.json');
+const manifestExtraInfo = require('./src/manifest/manifest-ff.json');
 
 module.exports = {
   mode: 'production',

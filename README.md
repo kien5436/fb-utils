@@ -8,7 +8,7 @@ Adds some awesome features to control Facebook
 - [x] Block "seen" feature of the chat
 - [x] Block the "delivery receipts" feature of the chat
 - [x] Block the typing indicator feature of the chat
-- [] Hide your active status
+- [ ] Hide your active status
 - [x] Remove Facebook click identifier (fbclid)
 - [x] Block "seen" feature of the story
 - [x] Block Facebook pixel
@@ -24,7 +24,7 @@ coming soon
 ```
 - Install from file
 
-  - Download `facebook-utils.crx` from [this link](https://github.com/shhlkien/facebook-utils/releases/download/1.0.1/facebook-utils.crx)
+  - Download `facebook-utils.crx` from [this link](https://github.com/shhlkien/fb-utils/releases/download/1.6.0/facebook_utils-1.6.0.crx)
   - Open `chrome://extensions/` tab, drag and drop the downloaded file to this page
 
 ## Contribution and support
