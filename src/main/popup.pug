@@ -36,10 +36,12 @@ html(lang="en")
           ul.menu-list
           p.menu-label(data-trans='menuLabelOther')
           ul.menu-list
-          p.is-size-7.has-text-danger.mt-4(data-trans='caution')
+          //- p.is-size-7.has-text-danger.mt-4(data-trans='caution')
 
     footer.footer
-      .content.has-text-centered
+      .content.has-text-centered.is-size-6
         a(href='https://addons.mozilla.org/en-US/firefox/addon/facebook-utils/' data-trans='rate')
+        a(href='https://github.com/shhlkien/fb-utils/issues' data-trans='bugReport')
 
+    script(async src='../libs.js')
     script(async src='popup.js')

@@ -1,4 +1,5 @@
 {
+  "bugReport": { "message": "Báo lỗi" },
   "extensionName": { "message": "Facebook utils" },
   "description": { "message": "Biến Facebook thành của bạn" },
   "tabOptions": { "message": "Tùy chọn" },
@@ -21,6 +22,5 @@
   "blockSeenStory": { "message": "Chặn \"đã xem\" trong story" },
   "hideActiveStatus": { "message": "Ẩn trạng thái hoạt động" },
   "blockFbPixel": { "message": "Chặn mã theo dõi Facebook pixel" },
-  "stopUpNextVideo": { "message": "Chặn tự động phát video tiếp theo" },
-  "hideComments": { "message": "Ẩn bình luận (thử nghiệm)" }
+  "stopUpNextVideo": { "message": "Chặn tự động phát video tiếp theo" }
 }

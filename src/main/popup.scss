@@ -6,35 +6,31 @@
     url(../fonts/Nunito-400.woff) format('woff');
 }
 
-@font-face {
-  font-family: 'Nunito';
-  font-style: normal;
-  font-weight: 700;
-  src: url(../fonts/Nunito-700.woff2) format('woff2'),
-    url(../fonts/Nunito-700.woff) format('woff');
-}
-
-@import '~bulma/sass/utilities/_all';
-@import '~bulma/sass/base/minireset.sass';
-@import '~bulma/sass/base/helpers.sass';
-@import '~bulma/sass/elements/button.sass';
-@import '~bulma/sass/elements/icon.sass';
-@import '~bulma/sass/components/menu.sass';
-@import '~bulma/sass/components/level.sass';
-@import '~bulma/sass/components/tabs.sass';
-@import '~bulma/sass/layout/footer.sass';
-@import '~bulma/sass/form/shared.sass';
-@import '~bulma/sass/form/tools.sass';
+@import '~bulma/sass/utilities/all';
+@import '~bulma/sass/base/minireset';
+@import '~bulma/sass/base/helpers';
+@import '~bulma/sass/elements/button';
+@import '~bulma/sass/elements/icon';
+@import '~bulma/sass/components/menu';
+@import '~bulma/sass/components/level';
+@import '~bulma/sass/components/tabs';
+@import '~bulma/sass/layout/footer';
+@import '~bulma/sass/form/shared';
+@import '~bulma/sass/form/tools';
 @import 'font-awesome';
 
 $family-sans-serif: 'Nunito', sans-serif;
 
+html {
+  font-size: 14px
+}
+
 body {
   font-family: $family-sans-serif;
-  max-width: 23.75em;
 
   >.tabs {
     margin: unset !important;
+    overflow: hidden;
 
     a:hover {
       cursor: pointer
@@ -44,7 +40,7 @@ body {
 
 .content-block {
 
-  padding: 1.5em 1.5em 4em 1.5em;
+  padding: 1.5em;
 
   &.is-flex {
     align-items: center;
@@ -105,17 +101,25 @@ body {
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background-color: #e3e3e3;
   padding: 1rem 1.5rem;
-  width: 100%;
+
+  .content {
+    display: flex;
+    justify-content: space-around;
+  }
 }
 
 .has-scrollbar {
   scrollbar-color: dark;
   scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
 }
 
 .mt-4 {

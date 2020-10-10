@@ -1,4 +1,5 @@
 {
+  "bugReport": { "message": "Report bugs" },
   "extensionName": { "message": "Facebook utils" },
   "description": { "message": "Make Facebook yours" },
   "tabOptions": { "message": "Options" },
@@ -21,6 +22,5 @@
   "blockSeenStory": { "message": "Block the \"seen\" feature of the story" },
   "hideActiveStatus": { "message": "Hide your active status" },
   "blockFbPixel": { "message": "Block Facebook pixel" },
-  "stopUpNextVideo": { "message": "Stop \"up next\" video" },
-  "hideComments": { "message": "Hide comments (experimental)" }
+  "stopUpNextVideo": { "message": "Stop \"up next\" video" }
 }

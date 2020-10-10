@@ -1,17 +1,18 @@
+import { i18n, tabs, downloads, runtime } from 'webextension-polyfill';
+
 import './popup.scss';
 import './popup.pug';
 import { createElement } from './dom';
 import storage from '../storage';
 
 const options = {
-  block_seen: browser.i18n.getMessage('blockSeen'),
-  block_delivery_receipts: browser.i18n.getMessage('blockDeliveryReceipts'),
-  block_typing_indicator: browser.i18n.getMessage('blockTypingIndicator'),
-  block_seen_story: browser.i18n.getMessage('blockSeenStory'),
-  hide_active_status: browser.i18n.getMessage('hideActiveStatus'),
-  block_fb_pixel: browser.i18n.getMessage('blockFbPixel'),
-  stop_up_next_video: browser.i18n.getMessage('stopUpNextVideo'),
-  hide_comments: browser.i18n.getMessage('hideComments'),
+  block_seen: i18n.getMessage('blockSeen'),
+  block_delivery_receipts: i18n.getMessage('blockDeliveryReceipts'),
+  block_typing_indicator: i18n.getMessage('blockTypingIndicator'),
+  block_seen_story: i18n.getMessage('blockSeenStory'),
+  hide_active_status: i18n.getMessage('hideActiveStatus'),
+  block_fb_pixel: i18n.getMessage('blockFbPixel'),
+  stop_up_next_video: i18n.getMessage('stopUpNextVideo'),
 };
 
 window.addEventListener('load', () => {
@@ -69,7 +70,7 @@ window.addEventListener('load', () => {
 
   document.querySelectorAll('[data-trans]').forEach(el => {
 
-    el.innerText = browser.i18n.getMessage(el.getAttribute('data-trans'));
+    el.innerText = i18n.getMessage(el.getAttribute('data-trans'));
   });
 }, false);
 
@@ -83,10 +84,10 @@ function checkTheBox(checkbox) {
 
 function getVideoUrlFb() {
 
-  browser.tabs.query({ currentWindow: true, active: true })
-    .then(tabs => {
+  tabs.query({ currentWindow: true, active: true })
+    .then(_tabs => {
 
-      if (!tabs[0].url.includes('stories')) {
+      if (!_tabs[0].url.includes('stories')) {
 
         notifNoVideo();
         return;
@@ -106,12 +107,13 @@ function getVideoUrlFb() {
         }
       }
 
-      return browser.tabs.executeScript({ file: '/content-scripts/fb.js' });
+      return tabs.executeScript({ file: '/libs.js' });
     })
+    .then(() => tabs.executeScript({ file: '/content-scripts/fb-down-story.js' }))
     .catch(console.error);
 }
 
-browser.runtime.onMessage.addListener((message, sender) => {
+runtime.onMessage.addListener((message, sender) => {
 
   if (message.videoUrl) {
 
@@ -140,8 +142,8 @@ function createVideoItem(videoUrl, author) {
   const levelLeft = createElement('div', { class: 'level-left' });
   const levelRight = createElement('div', { class: 'level-right' });
 
-  const lvlLeftItem = createElement('div', { class: 'level-item' });
-  lvlLeftItem.innerText = browser.i18n.getMessage('storyAuthor', author);
+  const lvlLeftItem = createElement('div', { class: 'level-item is-size-6' });
+  lvlLeftItem.innerText = i18n.getMessage('storyAuthor', author);
   levelLeft.append(lvlLeftItem);
 
   const lvlRightItem = createElement('div', { class: 'level-item' });
@@ -152,7 +154,7 @@ function createVideoItem(videoUrl, author) {
   const btnDown = createElement('button', {
     class: 'button',
     type: 'button',
-    title: browser.i18n.getMessage('download'),
+    title: i18n.getMessage('download'),
   });
   const iconBox1 = createElement('span', { class: 'icon is-small' });
   const iconDown = createElement('i', { class: 'icon-download' });
@@ -160,7 +162,7 @@ function createVideoItem(videoUrl, author) {
   btnDown.append(iconBox1);
   btnDown.addEventListener('click', function(e) {
 
-    browser.downloads.download({
+    downloads.download({
         url: videoUrl,
         saveAs: true,
       })
@@ -171,7 +173,7 @@ function createVideoItem(videoUrl, author) {
   const a = createElement('a', {
     class: 'button',
     target: '_blank',
-    title: browser.i18n.getMessage('openLink'),
+    title: i18n.getMessage('openLink'),
     rel: 'noopener noreferrer',
     href: videoUrl,
   });
@@ -196,9 +198,9 @@ function createVideoItem(videoUrl, author) {
 function notifNoVideo() {
 
   const downloadContent = document.getElementById('download-videos-fb-content');
-  const p = createElement('p', { class: 'empty has-text-centered' });
+  const p = createElement('p', { class: 'empty has-text-centered is-size-6' });
 
-  p.innerHTML = browser.i18n.getMessage('noVideo');
+  p.innerHTML = i18n.getMessage('noVideo');
   downloadContent.innerHTML = '';
   downloadContent.append(p);
 }
@@ -216,7 +218,7 @@ function renderOptions() {
 
   fragmentPrivacy.append(renderOption(optionKeys[5]));
 
-  for (let i = 6; i < 8; i++)
+  for (let i = 6; i < 7; i++)
     fragmentOther.append(renderOption(optionKeys[i]));
 
   menuLists[0].append(fragmentActivity);

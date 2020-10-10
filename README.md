@@ -8,18 +8,30 @@ Adds some awesome features to control Facebook
 - [x] Block "seen" feature of the chat
 - [x] Block the "delivery receipts" feature of the chat
 - [x] Block the typing indicator feature of the chat
-- [x] Hide your active status
+- [] Hide your active status
 - [x] Remove Facebook click identifier (fbclid)
 - [x] Block "seen" feature of the story
 - [x] Block Facebook pixel
 - [x] Stop up next video playing automatically
 
 ## Installation
+- Firefox
 
+Go to [AMO](https://addons.mozilla.org/en-US/firefox/addon/facebook-utils) page and click "Add to Firefox" button
+- Chrome
+```
+coming soon
+```
+- Install from file
 
-## Contribute
+  - Download `facebook-utils.crx` from [this link](https://github.com/shhlkien/facebook-utils/releases/download/1.0.1/facebook-utils.crx)
+  - Open `chrome://extensions/` tab, drag and drop the downloaded file to this page
 
-Let people know how they can contribute into your project. A [contributing guideline](https://github.com/zulip/zulip-electron/blob/master/CONTRIBUTING.md) will be a big plus.
+## Contribution and support
+- This extension is FOSS, you can view, fork and contribute it
+- If you find any issue or want to improve this extension, please post your problem [here](https://github.com/shhlkien/fb-utils/issues)
+- If you find this add-on useful, you can [rate it](https://addons.mozilla.org/en-US/developers/addon/facebook-utils) and share it with your friends
+
 
 ## License
 The MIT License

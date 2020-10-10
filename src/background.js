@@ -1,10 +1,15 @@
+import 'content-scripts-register-polyfill';
+import { webRequest, webNavigation, tabs as browserTabs, contentScripts } from 'webextension-polyfill';
+
+import { ENV, isChrome } from './config';
 import storage from './storage';
 
 (async () => {
   let settings = await storage.get();
+  let scriptStopNextVideo = null;
 
   // block chat seen
-  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_seen }), {
+  webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_seen }), {
     urls: [
       '*://*.facebook.com/*change_read_status*',
       '*://*.messenger.com/*change_read_status*',
@@ -12,7 +17,7 @@ import storage from './storage';
   }, ['blocking']);
 
   // block typing indicator
-  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_typing_indicator }), {
+  webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_typing_indicator }), {
     urls: [
       '*://*.facebook.com/*typ.php*',
       '*://*.messenger.com/*typ.php*',
@@ -20,7 +25,7 @@ import storage from './storage';
   }, ['blocking']);
 
   // block delivery receipts
-  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_delivery_receipts }), {
+  webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_delivery_receipts }), {
     urls: [
       '*://*.facebook.com/*delivery_receipts*',
       '*://*.messenger.com/*delivery_receipts*',
@@ -30,8 +35,8 @@ import storage from './storage';
   }, ['blocking']);
 
   // block last active time
-  browser.webRequest.onBeforeRequest.addListener(details => {
-    // console.info(`background.js:31: hide_active_status`, details)
+  webRequest.onBeforeRequest.addListener(details => {
+    // console.assert(`background.js:31: hide_active_status`, details)
 
     return ({ cancel: settings.hide_active_status })
   }, {
@@ -68,10 +73,10 @@ import storage from './storage';
   }, ['blocking']);
 
   // block linkclick analysis
-  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: true }), { urls: ['https://*.facebook.com/si/linkclick/ajax_callback/'] }, ['blocking']);
+  webRequest.onBeforeRequest.addListener(details => ({ cancel: true }), { urls: ['https://*.facebook.com/si/linkclick/ajax_callback/'] }, ['blocking']);
 
   // remove fbclid
-  browser.webRequest.onBeforeRequest.addListener(details => {
+  webRequest.onBeforeRequest.addListener(details => {
 
     const url = new URL(details.url);
 
@@ -88,10 +93,10 @@ import storage from './storage';
   }, ['blocking']);
 
   // block FB pixel
-  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_fb_pixel }), { urls: ['https://connect.facebook.net/*'] }, ['blocking']);
+  webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.block_fb_pixel }), { urls: ['https://connect.facebook.net/*'] }, ['blocking']);
 
   // block story seen on FB
-  browser.webRequest.onBeforeRequest.addListener(details => {
+  webRequest.onBeforeRequest.addListener(details => {
 
     const seenRequests = ['MessengerMarkReadMutation', 'storiesUpdateSeenStateMutation'];
 
@@ -101,29 +106,13 @@ import storage from './storage';
     urls: ['https://*.facebook.com/api/graphql/*']
   }, ['blocking', 'requestBody']);
 
-  // stop up next video
-  browser.webRequest.onBeforeRequest.addListener(details => ({ cancel: settings.stop_up_next_video }), {
-    urls: ['https://*.facebook.com/video/tahoe/video_data/*']
-  }, ['blocking']);
+  execStopNextVideo(settings.stop_up_next_video);
 
-  browser.webNavigation.onHistoryStateUpdated.addListener(details => {
+  webNavigation.onHistoryStateUpdated.addListener(details => {
 
     if (!details.url.includes('stories'))
       localStorage.removeItem('videos');
   }, { url: [{ urlMatches: 'https://www.facebook.com/*' }] });
-
-  // hide comments
-  browser.tabs.onUpdated.addListener((tabId, { url: changedUrl }, { url: currentUrl }) => {
-
-    const url = new URL(changedUrl || currentUrl);
-
-    if (settings.hide_comments && !url.pathname.startsWith('/messages'))
-      browser.tabs.executeScript(tabId, {
-        file: '/content-scripts/fb-remove-comments.js',
-        runAt: 'document_end'
-      });
-
-  }, { urls: ['https://www.facebook.com/*'] });
 
   storage.onChanged.addListener(onChanged);
 
@@ -132,23 +121,40 @@ import storage from './storage';
     try {
       settings = await storage.get();
 
-      if (changes.hide_comments && changes.hide_comments.newValue) {
+      if (changes.stop_up_next_video) {
 
-        const tabs = await browser.tabs.query({
+        execStopNextVideo(changes.stop_up_next_video.newValue, true);
+      }
+    }
+    catch (err) { console.error(err); }
+  }
+
+  async function execStopNextVideo(stop, reload = false) {
+
+    try {
+      if (stop) {
+
+        scriptStopNextVideo && scriptStopNextVideo.unregister();
+        scriptStopNextVideo = await contentScripts.register({
+          matches: ['https://*.facebook.com/*'],
+          js: [
+            { file: '/libs.js' },
+            { file: '/content-scripts/fb-stop-next-video.js' }
+          ],
+          runAt: 'document_idle',
+        });
+      }
+
+      if (reload) {
+
+        const tabs = await browserTabs.query({
           currentWindow: true,
           url: 'https://*.facebook.com/*',
         });
         const tabIds = tabs.map(tab => tab.id);
 
         for (let i = tabIds.length; --i >= 0;)
-          browser.tabs.reload(tabIds[i]);
-
-        browser.contentScripts.register({
-          excludeMatches: ['https://*.facebook.com/messages/*'],
-          matches: ['https://*.facebook.com/*'],
-          js: [{ file: '/content-scripts/fb-remove-comments.js' }],
-          runAt: 'document_end',
-        });
+          browserTabs.reload(tabIds[i]);
       }
     }
     catch (err) { console.error(err); }

@@ -5,8 +5,11 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "pack": "cd build && zip -r -FS ../fb-utils.zip *",
-    "pack-src": "zip -r -FS source.zip src INSTRUCTIONS.md package.json webpack.config.js yarn.lock"
+    "pack-src": "zip -r -FS source.zip src INSTRUCTIONS.md package.json webpack.config.js yarn.lock",
+    "release": "yarn run web-ext-build && yarn run pack-src",
+    "web-ext-build": "web-ext build -s build -a . -o",
+    "web-ext-dev": "web-ext run -s build -p=dev",
+    "web-ext-lint": "web-ext lint -s build"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
@@ -27,6 +30,10 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "bulma": "^0.8.2"
+    "bulma": "^0.8.2",
+    "content-scripts-register-polyfill": "^1.0.5",
+    "lodash": "^4.17.20",
+    "web-ext": "^5.2.0",
+    "webextension-polyfill": "^0.6.0"
   }
 }

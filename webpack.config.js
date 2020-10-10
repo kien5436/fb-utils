@@ -5,13 +5,15 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 
+const manifestExtraInfo = require('./src/manifest/manifest-chrome.json');
+
 module.exports = {
   mode: 'production',
   entry: {
     background: './src/background.js',
     'main/popup': './src/main/popup.js',
-    'content-scripts/fb': './src/content-scripts/fb.js',
-    'content-scripts/fb-remove-comments': './src/content-scripts/fb-remove-comments.js',
+    'content-scripts/fb-down-story': './src/content-scripts/fb-down-story.js',
+    'content-scripts/fb-stop-next-video': './src/content-scripts/fb-stop-next-video.js',
   },
   output: {
     filename: '[name].js',
@@ -52,17 +54,37 @@ module.exports = {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({ filename: '[name].css' }),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: './src/manifest.json', to: '[name].[ext]' },
-        { from: './src/_locales/**', to: '_locales/[folder]/[name].[ext]' },
-        { from: './src/icons/*', to: '[folder]/[name].[ext]' },
-        { from: './src/fonts/*.(woff|woff2)', to: '[folder]/[name].[ext]' },
+      patterns: [{
+          from: './src/manifest/manifest.json',
+          to: '[name].[ext]',
+          transform: content => {
+
+            const manifest = JSON.parse(content.toString());
+
+            for (const key in manifestExtraInfo)
+              manifest[key] = manifestExtraInfo[key];
+
+            return Promise.resolve(JSON.stringify(manifest));
+          },
+          cacheTransform: false,
+        },
+        {
+          from: './src/**/messages.json',
+          to: '[path]/[name].[ext]',
+          transformPath: targetPath => Promise.resolve(targetPath.replace('src/', '')),
+          transform: content => Promise.resolve(JSON.stringify(JSON.parse(content.toString()))),
+          cacheTransform: false,
+        },
+        { from: './src/icons/*', to: '[folder]/[name].[ext]', cacheTransform: true, },
+        { from: './src/fonts/*.(woff|woff2)', to: '[folder]/[name].[ext]', cacheTransform: true, },
       ]
     }),
   ],
   optimization: {
     splitChunks: {
       chunks: 'all',
+      minSize: 0,
+      name(module) { return 'libs' }
     },
     minimizer: [
       new TerserJSPlugin({
