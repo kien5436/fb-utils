@@ -2,8 +2,5 @@
   "e4x": true,
   "brace_style": "end-expand,preserve-inline",
   "indent_size": 2,
-  "html": {
-    "unformatted": ["html", "body", "link", "script", "head", "meta", "ul", "li", "label", "input", "span"]
-  },
   "css": { "selector_separator_newline": false }
 }

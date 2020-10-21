@@ -1,0 +1,16 @@
+{
+  "files.exclude": {
+    "**/node_modules/{[^b],?[^u],??[^l],???[^m]}*": true,
+  },
+  "path-autocomplete.transformations": [{
+    "type": "replace",
+    "parameters": ["^_", ""],
+    "when": {
+      "fileName": "\\.scss$"
+    }
+  }],
+  "path-autocomplete.pathMappings": {
+    "~bulma": "${workspace}/node_modules/bulma"
+  },
+  "beautify.ignore": ["**/build/**"]
+}

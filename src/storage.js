@@ -1,5 +1,8 @@
 import { storage as browserStorage } from 'webextension-polyfill';
-import { ENV } from './config';
+import isEqual from 'lodash/isEqual';
+import isObject from 'lodash/isObject';
+
+import { ENV, defaultSettings } from './config';
 
 const storage = 'production' !== ENV ? browserStorage.local : browserStorage.sync;
 
@@ -9,36 +12,65 @@ const storage = 'production' !== ENV ? browserStorage.local : browserStorage.syn
  */
 async function get(keys = null) {
 
-  let store;
-
-  try {
-    store = await storage.get(keys);
-
-    if (0 === Object.keys(store).length)
-      store = {
-        block_seen: false,
-        block_typing_indicator: false,
-        block_delivery_receipts: false,
-        hide_active_status: false,
-        block_fb_pixel: false,
-        block_seen_story: false,
-        stop_up_next_video: false,
-      };
-  }
-  catch (err) { console.error(err); }
-  finally { return store; }
+  const store = await storage.get(keys);
+  return 0 < Object.keys(store).length ? store : null;
 }
 
 async function save(store) {
 
+  await storage.set(store);
+}
+
+async function remove(keys) {
+
+  await storage.remove(keys);
+}
+
+async function init() {
+
   try {
-    await storage.set(store);
+    const userSettings = await get();
+
+    if (null === userSettings) storage.set(defaultSettings); // 1st install
+    else if (!isEqual(userSettings, defaultSettings)) { // update
+
+      const { newSettings, deprecatedSettings } = mergeSettings(userSettings, { ...defaultSettings });
+
+      await storage.remove(deprecatedSettings);
+      await storage.set({ ...newSettings });
+    }
   }
-  catch (err) { console.error(err); }
+  catch (err) { console.assert('production' === ENV, err); }
+
+  function mergeSettings(old, _new) {
+
+    const deprecatedSettings = [];
+
+    for (const key in old)
+      if (old.hasOwnProperty(key)) {
+
+        const oldVal = old[key];
+        const newVal = _new[key];
+
+        if (!_new.hasOwnProperty(key)) deprecatedSettings.push(key);
+        else if (isObjectLiteral(oldVal) && isObjectLiteral(newVal) && !isEqual(oldVal, newVal)) {
+
+          for (const k in oldVal)
+            if (oldVal.hasOwnProperty(k))
+              if (oldVal[k] !== newVal[k]) _new[key][k] = oldVal[k];
+        }
+      }
+
+    return { newSettings: _new, deprecatedSettings };
+  }
+
+  function isObjectLiteral(value) { return isObject(value) && !Array.isArray(value) }
 }
 
 export default {
+  init,
   get,
+  remove,
   save,
   onChanged: browserStorage.onChanged,
 }

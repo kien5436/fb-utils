@@ -1,0 +1,13 @@
+@import '~bulma/sass/utilities/all';
+@import '~bulma/sass/helpers/color';
+@import '~bulma/sass/helpers/typography';
+@import '~bulma/sass/layout/footer';
+
+.footer {
+  padding: 1rem 1.5rem;
+
+  .content {
+    display: flex;
+    justify-content: space-around;
+  }
+}
