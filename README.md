@@ -13,6 +13,7 @@ Adds some awesome features to control Facebook
 - [x] Block "seen" feature of the story
 - [x] Block Facebook pixel
 - [x] Stop up next video playing automatically
+- [x] And more...
 
 ## Installation
 - Firefox
@@ -24,14 +25,13 @@ coming soon
 ```
 - Install from file
 
-  - Download `facebook-utils.crx` from [this link](https://github.com/shhlkien/fb-utils/releases/download/1.6.0/facebook_utils-1.6.0.crx)
+  - Download the latest `.crx` from [this link](https://github.com/shhlkien/fb-utils/releases)
   - Open `chrome://extensions/` tab, drag and drop the downloaded file to this page
 
 ## Contribution and support
 - This extension is FOSS, you can view, fork and contribute it
 - If you find any issue or want to improve this extension, please post your problem [here](https://github.com/shhlkien/fb-utils/issues)
 - If you find this add-on useful, you can [rate it](https://addons.mozilla.org/en-US/developers/addon/facebook-utils) and share it with your friends
-
 
 ## License
 The MIT License

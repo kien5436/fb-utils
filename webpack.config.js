@@ -1,8 +1,9 @@
-const { resolve } = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { resolve } = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 
 const manifestExtraInfo = require('./src/manifest/manifest-ff.json');
@@ -10,9 +11,12 @@ const manifestExtraInfo = require('./src/manifest/manifest-ff.json');
 module.exports = {
   mode: 'production',
   entry: {
-    background: './src/background.js',
-    'main/popup': './src/main/popup.js',
+    background: './src/background/index.js',
+    'main/popup': './src/main/popup.jsx',
     'content-scripts/fb-down-story': './src/content-scripts/fb-down-story.js',
+    'content-scripts/fb-down-story-2': './src/content-scripts/fb-down-story-2.js',
+    'content-scripts/fb-remove-annoyances': './src/content-scripts/fb-remove-annoyances.js',
+    'content-scripts/fb-remove-tracking-params': './src/content-scripts/fb-remove-tracking-params.js',
     'content-scripts/fb-stop-next-video': './src/content-scripts/fb-stop-next-video.js',
   },
   output: {
@@ -22,7 +26,7 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.js$/,
+      test: /\.jsx$/,
       exclude: /node_modules/,
       use: {
         loader: 'babel-loader',
@@ -38,16 +42,6 @@ module.exports = {
         },
         'sass-loader'
       ]
-    }, {
-      test: /\.pug$/,
-      use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[folder]/[name].html'
-          }
-        },
-        'pug-html-loader'
-      ],
     }]
   },
   plugins: [
@@ -79,12 +73,24 @@ module.exports = {
         { from: './src/fonts/*.(woff|woff2)', to: '[folder]/[name].[ext]', cacheTransform: true, },
       ]
     }),
+    new HtmlWebpackPlugin({
+      title: '',
+      filename: 'main/popup.html',
+      template: 'src/main/popup.html',
+      inject: false,
+      cache: false,
+    }),
   ],
   optimization: {
     splitChunks: {
       chunks: 'all',
       minSize: 0,
-      name(module) { return 'libs' }
+      name(module) {
+
+        return module.context.includes('node_modules') ?
+          (module.context.includes('preact') ? 'libs/preact' : 'libs/common') :
+          module.context;
+      }
     },
     minimizer: [
       new TerserJSPlugin({
@@ -98,5 +104,9 @@ module.exports = {
         },
       })
     ],
-  }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  stats: 'minimal',
 };

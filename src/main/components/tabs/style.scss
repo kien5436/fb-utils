@@ -1,0 +1,11 @@
+@import '~bulma/sass/utilities/all';
+@import '~bulma/sass/components/tabs';
+@import '~bulma/sass/helpers/spacing';
+
+.tabs {
+  overflow: hidden;
+
+  a:hover {
+    cursor: pointer
+  }
+}

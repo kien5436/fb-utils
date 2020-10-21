@@ -1,0 +1,33 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env", {
+        "targets": {
+          "chrome": 70,
+          "firefox": 60
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-react-jsx", {
+        "pragma": "h",
+        "pragmaFrag": "Fragment"
+      }
+    ],
+    [
+      "@babel/plugin-transform-runtime", {
+        "absoluteRuntime": true,
+        "corejs": 3,
+        "helpers": false,
+        "regenerator": false,
+        "useESModules": true,
+        "version": "^7.11.0"
+      }
+    ]
+  ],
+  "only": ["./src/main"],
+  "compact": true,
+  "minified": true
+}

@@ -1,0 +1,68 @@
+@import '~bulma/sass/utilities/all';
+@import '~bulma/sass/components/menu';
+@import '~bulma/sass/helpers/color';
+@import '~bulma/sass/helpers/spacing';
+@import '~bulma/sass/helpers/typography';
+
+.menu {
+  overflow: auto;
+  max-height: 15em;
+
+  .content &-list {
+    list-style: none;
+  }
+
+  li {
+    font-size: .97em;
+
+    &:not(:last-child) {
+      margin-bottom: .5rem
+    }
+  }
+
+  &-list a {
+    display: inline;
+
+    &:hover {
+      background-color: unset
+    }
+  }
+}
+
+.checkbox {
+
+  [type='checkbox'] {
+    display: none;
+  }
+
+  &-pseudo {
+    border-radius: 3px;
+    border: 1px solid $text;
+    display: inline-block;
+    height: 1rem;
+    margin-right: 0.5rem;
+    position: relative;
+    width: 1rem;
+
+    &:before {
+      border-bottom: 3px solid $text;
+      border-right: 3px solid $text;
+      content: '';
+      display: none;
+      height: 1rem;
+      left: 5px;
+      position: absolute;
+      top: -3px;
+      transform: rotate(45deg);
+      width: 0.5rem;
+
+      [type='checkbox']:checked~& {
+        display: block;
+      }
+    }
+  }
+
+  span {
+    vertical-align: middle
+  }
+}

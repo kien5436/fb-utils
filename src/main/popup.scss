@@ -8,17 +8,9 @@
 
 @import '~bulma/sass/utilities/all';
 @import '~bulma/sass/base/minireset';
-@import '~bulma/sass/base/helpers';
-@import '~bulma/sass/elements/button';
-@import '~bulma/sass/elements/icon';
-@import '~bulma/sass/components/menu';
-@import '~bulma/sass/components/level';
-@import '~bulma/sass/components/tabs';
-@import '~bulma/sass/layout/footer';
-@import '~bulma/sass/form/shared';
-@import '~bulma/sass/form/tools';
 @import 'font-awesome';
 
+$isChrome: false;
 $family-sans-serif: 'Nunito', sans-serif;
 
 html {
@@ -28,85 +20,19 @@ html {
 body {
   font-family: $family-sans-serif;
 
-  >.tabs {
-    margin: unset !important;
-    overflow: hidden;
+  @if $isChrome {
+    max-width: 32em;
+  }
 
-    a:hover {
-      cursor: pointer
-    }
+  @else {
+    max-width: 24em;
   }
 }
 
-.content-block {
-
-  padding: 1.5em;
-
-  &.is-flex {
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  &.has-scrollbar {
-    max-height: 20em;
-    overflow: auto;
-  }
-}
-
-.menu {
+.has-scrollbar {
+  max-height: 20em;
   overflow: auto;
-  max-height: 15em;
-
-  li {
-    font-size: .97em;
-
-    &:not(:last-child) {
-      margin-bottom: .5rem
-    }
-  }
-}
-
-.checkbox {
-  position: relative;
-
-  input[type='checkbox'] {
-    display: none
-  }
-
-  span {
-    padding-left: 2em
-  }
-
-  &:before {
-    border-radius: 3px;
-    border: 1px solid #000;
-    content: '';
-    display: block;
-    height: 1em;
-    left: 0;
-    position: absolute;
-    top: .15rem;
-    width: 1em;
-  }
-
-  &.is-checked:after {
-    content: '\2714';
-    font-family: $family-sans-serif;
-    font-size: 1.2em;
-    left: 0;
-    position: absolute;
-    top: -.1rem;
-  }
-}
-
-.footer {
-  padding: 1rem 1.5rem;
-
-  .content {
-    display: flex;
-    justify-content: space-around;
-  }
+  padding: 1.5em;
 }
 
 .has-scrollbar {
@@ -120,8 +46,4 @@ body {
   &::-webkit-scrollbar-thumb {
     background: #888;
   }
-}
-
-.mt-4 {
-  margin-top: 1rem
 }
