@@ -64,6 +64,11 @@ function Menu() {
     label: i18n.getMessage('menuLabelOther'),
     items: [
       {
+        label: i18n.getMessage('fixFont'),
+        value: 'fix_font',
+        checked: settings.fix_font,
+      },
+      {
         label: i18n.getMessage('stopUpNextVideo'),
         value: 'stop_up_next_video',
         checked: settings.stop_up_next_video,

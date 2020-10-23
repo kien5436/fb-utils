@@ -12,12 +12,12 @@ module.exports = {
   mode: 'production',
   entry: {
     background: './src/background/index.js',
-    'main/popup': './src/main/popup.jsx',
-    'content-scripts/fb-down-story': './src/content-scripts/fb-down-story.js',
     'content-scripts/fb-down-story-2': './src/content-scripts/fb-down-story-2.js',
+    'content-scripts/fb-down-story': './src/content-scripts/fb-down-story.js',
     'content-scripts/fb-remove-annoyances': './src/content-scripts/fb-remove-annoyances.js',
     'content-scripts/fb-remove-tracking-params': './src/content-scripts/fb-remove-tracking-params.js',
     'content-scripts/fb-stop-next-video': './src/content-scripts/fb-stop-next-video.js',
+    'main/popup': './src/main/popup.jsx',
   },
   output: {
     filename: '[name].js',

@@ -9,6 +9,7 @@
   "description": { "message": "Make Facebook yours" },
   "download": { "message": "Download" },
   "extensionName": { "message": "Facebook utils" },
+  "fixFont": { "message": "Fix font" },
   "helpLink": { "message": "Need help" },
   "hideActiveStatus": { "message": "Hide your active status" },
   "menuLabelActivity": { "message": "activity" },

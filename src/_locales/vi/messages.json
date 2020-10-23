@@ -9,6 +9,7 @@
   "description": { "message": "Biến Facebook thành của bạn" },
   "download": { "message": "Tải xuống" },
   "extensionName": { "message": "Facebook utils" },
+  "fixFont": { "message": "Sửa lỗi font" },
   "hideActiveStatus": { "message": "Ẩn trạng thái hoạt động" },
   "menuLabelActivity": { "message": "hoạt động" },
   "menuLabelOther": { "message": "khác" },

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "__MSG_description__",
   "author": "Phạm Trung Kiên",
   "icons": {
@@ -30,17 +30,12 @@
     ]
   },
   "content_scripts": [{
-    "matches": ["https://*/*", "http://*/*"],
-    "js": ["libs/common.js"]
-  }, {
     "matches": ["https://*.facebook.com/*"],
-    "js": ["content-scripts/fb-stop-next-video.js"]
-  }, {
-    "matches": ["https://*.facebook.com/*"],
-    "js": ["content-scripts/fb-remove-annoyances.js"]
-  }, {
-    "matches": ["https://*/*", "http://*/*"],
-    "js": ["content-scripts/fb-remove-tracking-params.js"],
-    "run_at": "document_end"
+    "js": [
+      "libs/common.js",
+      "content-scripts/fb-stop-next-video.js",
+      "content-scripts/fb-remove-annoyances.js",
+      "content-scripts/fb-remove-tracking-params.js"
+    ]
   }]
 }

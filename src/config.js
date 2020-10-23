@@ -5,6 +5,7 @@ const defaultSettings = {
   block_seen_story: false,
   block_seen: false,
   block_typing_indicator: false,
+  fix_font: false,
   hide_active_status: false,
   remove_people_u_may_know: true,
   remove_sponsored_ad: true,

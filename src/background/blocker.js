@@ -65,7 +65,7 @@ const filter = Object.freeze({
 });
 let blockSetting = {};
 
-async function blockRequest(cb, filter, extraInfo = []) {
+function blockRequest(cb, filter, extraInfo = []) {
 
   webRequest.onBeforeRequest.addListener(cb, filter, ['blocking', ...extraInfo]);
 }
@@ -112,7 +112,7 @@ function blockRequests() {
   }, filter.seenStory, ['requestBody']);
 }
 
-async function resetBlocker() {
+async function resetBlocker(chages, area) {
 
   blockSetting = await storage.get([
     'block_delivery_receipts',

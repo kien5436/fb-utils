@@ -1,6 +1,7 @@
 - Before all releases:
   - ENV = 'production'
   - Check all `console` commands
+  - Check version
 - Before release for Chrome:
   - popup.scss: $isChrome: true;
   - webpack.config.js: const manifestExtraInfo = require('./src/manifest/manifest-chrome.json');
