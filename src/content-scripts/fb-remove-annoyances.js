@@ -30,6 +30,7 @@ import debounce from 'lodash/debounce';
   function removeSponsored(mutations) {
 
     const selector = `[aria-label="${sponsoredLabels[lang] || sponsoredLabels.en}"]`;
+    const sponsorsAside = document.querySelector('[data-pagelet="RightRail"] .sponsored_ad');
 
     if (document.querySelector(selector)) {
 
@@ -39,6 +40,11 @@ import debounce from 'lodash/debounce';
 
         labelElements[j].closest('[data-pagelet^="FeedUnit"]').remove();
       }
+    }
+
+    if (sponsorsAside) {
+
+      sponsorsAside.parentElement.parentElement.remove();
     }
   }
 })();

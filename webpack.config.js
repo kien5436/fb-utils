@@ -1,12 +1,14 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { resolve } = require('path');
+const { sync } = require('glob');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const PurgecssPlugin = require('purgecss-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 
-const manifestExtraInfo = require('./src/manifest/manifest-ff.json');
+const manifestExtraInfo = require('./src/manifest/manifest-chrome.json');
 
 module.exports = {
   mode: 'production',
@@ -80,6 +82,10 @@ module.exports = {
       inject: false,
       cache: false,
     }),
+    new PurgecssPlugin({
+      paths: () => sync(`./src/**/*`, { nodir: true }),
+      safelist: ['class', 'icon-'],
+    }),
   ],
   optimization: {
     splitChunks: {
@@ -90,7 +96,15 @@ module.exports = {
         return module.context.includes('node_modules') ?
           (module.context.includes('preact') ? 'libs/preact' : 'libs/common') :
           module.context;
-      }
+      },
+      cacheGroups: {
+        styles: {
+          name: 'main/popup',
+          test: /\.s?[ac]ss$/,
+          chunks: 'all',
+          enforce: true
+        }
+      },
     },
     minimizer: [
       new TerserJSPlugin({

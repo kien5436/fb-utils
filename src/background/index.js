@@ -24,5 +24,5 @@ storage.onChanged.addListener(resetBlocker);
 
     storage.remove('videos');
   }
-  catch (err) { console.assert('production' === ENV, 'index.js:31:', err); }
+  catch (err) { console.assert('production' === ENV, 'index.js:27:', err); }
 })();

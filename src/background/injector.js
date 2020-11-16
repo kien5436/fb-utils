@@ -82,7 +82,7 @@ const port = {
   removeTrackingParams: null,
   stopNextVideo: null,
 };
-const insertedCss = [];
+const insertedCss = new Map();
 
 function listenContentScripts() {
 
@@ -187,23 +187,32 @@ async function fixFont() {
     for (let i = tabs.length; --i >= 0;) {
 
       const tab = tabs[i];
-      console.info('injector.js:193: ', tab.id, insertedCss.includes(tab.id));
 
-      if (fix_font && !insertedCss.includes(tab.id)) {
+      if (fix_font && (!insertedCss.has(tab.id) || tab.url !== insertedCss.get(tab.id))) {
 
-        browserTabs.executeScript(tab.id, { code: `
+        browserTabs.executeScript(tab.id, {
+          allFrames: true,
+          code: `
+          var fbUtilsCss = document.getElementById('fb-utils-css');
+          fbUtilsCss && fbUtilsCss.remove();
           var link = document.createElement('link');
           link.id = 'fb-utils-css';
           link.setAttribute('rel', 'stylesheet');
           link.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400&display=swap');
-          document.querySelector('head').append(link);` });
-        browserTabs.insertCSS(tab.id, { code: css });
-        insertedCss.push(tab.id);
+          document.querySelector('head').append(link);`,
+          runAt: 'document_end'
+        });
+        browserTabs.insertCSS(tab.id, {
+          allFrames: true,
+          code: css,
+          runAt: 'document_end'
+        });
+        insertedCss.set(tab.id, tab.url);
       }
-      else if (!fix_font && insertedCss.includes(tab.id)) {
+      else if (!fix_font && insertedCss.has(tab.id)) {
 
-        browserTabs.removeCSS(tab.id, { code: css });
-        insertedCss.splice(insertedCss.indexOf(tab.id), 1);
+        browserTabs.removeCSS(tab.id, { allFrames: true, code: css });
+        insertedCss.delete(tab.id);
       }
     }
   }

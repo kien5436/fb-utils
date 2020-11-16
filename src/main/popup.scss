@@ -2,15 +2,14 @@
   font-family: 'Nunito';
   font-style: normal;
   font-weight: 400;
-  src: url(../fonts/Nunito-400.woff2) format('woff2'),
-    url(../fonts/Nunito-400.woff) format('woff');
+  src: url(../fonts/Nunito-400.woff2) format('woff2');
 }
 
+@import 'font-awesome';
 @import '~bulma/sass/utilities/all';
 @import '~bulma/sass/base/minireset';
-@import 'font-awesome';
 
-$isChrome: false;
+$isChrome: true;
 $family-sans-serif: 'Nunito', sans-serif;
 
 html {
