@@ -2,8 +2,7 @@
   font-family: 'font-awesome';
   font-weight: normal;
   font-style: normal;
-  src: url('../fonts/font-awesome.woff2?76471995') format('woff2'),
-    url('../fonts/font-awesome.woff?76471995') format('woff');
+  src: url('../fonts/font-awesome.woff2?76471995') format('woff2');
 }
 
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
@@ -16,7 +15,6 @@
   }
 }
 */
-
 [class^="icon-"]:before, [class*=" icon-"]:before {
   font-family: "font-awesome";
   font-style: normal;

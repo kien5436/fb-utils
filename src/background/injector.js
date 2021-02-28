@@ -117,7 +117,7 @@ async function getScript() {
 async function fixFont() {
 
   try {
-    const css = 'html, body, div, span,a,h1,h2,h3,h4,h5,h6 { font-family: \'Nunito\', sans-serif !important }';
+    const css = `html, body, div, span,a,h1,h2,h3,h4,h5,h6 { font-family: 'Nunito', sans-serif !important }`;
     const { fix_font } = await storage.get('fix_font');
     const tabs = await browserTabs.query({
       currentWindow: true,

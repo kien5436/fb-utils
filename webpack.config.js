@@ -87,6 +87,17 @@ module.exports = {
       paths: () => sync('./src/**/*', { nodir: true }),
       safelist: ['class', 'icon-'],
     }),
+    new HtmlWebpackPlugin({
+      title: '',
+      filename: 'main/popup.html',
+      template: 'src/main/popup.html',
+      inject: false,
+      cache: false,
+    }),
+    new PurgecssPlugin({
+      paths: () => sync(`./src/**/*`, { nodir: true }),
+      safelist: ['class', 'icon-'],
+    }),
   ],
   optimization: {
     splitChunks: {

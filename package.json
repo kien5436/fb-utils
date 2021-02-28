@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack",
     "pack-src": "zip -r -FS source.zip src INSTRUCTIONS.md package.json webpack.config.js yarn.lock",
-    "release": "yarn web-ext-build && yarn pack-src",
-    "release-chrome": "google-chrome --pack-extension=./build --pack-extension-key=./build.pem --disable-setuid-sandbox",
+    "release": "yarn build && yarn web-ext-build && yarn pack-src",
+    "release-chrome": "yarn build && google-chrome --pack-extension=./build --pack-extension-key=./build.pem --disable-setuid-sandbox",
     "web-ext-build": "web-ext build -s build -a . -o",
     "web-ext-dev": "web-ext run -s build -p=dev",
     "web-ext-lint": "web-ext lint -s build"

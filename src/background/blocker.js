@@ -5,6 +5,18 @@ import { webRequest } from 'webextension-polyfill';
 import storage from '../storage';
 
 const filter = Object.freeze({
+  seen: {
+    urls: [
+      '*://*.facebook.com/*change_read_status*',
+      '*://*.messenger.com/*change_read_status*',
+    ]
+  },
+  typingIndicator: {
+    urls: [
+      '*://*.facebook.com/*typ.php*',
+      '*://*.messenger.com/*typ.php*',
+    ]
+  },
   deliveryReceipts: {
     urls: [
       '*://*.facebook.com/*delivery_receipts*',
@@ -67,7 +79,7 @@ const filter = Object.freeze({
 });
 let blockSetting = {};
 
-async function blockRequest(cb, filter, extraInfo = []) {
+function blockRequest(cb, filter, extraInfo = []) {
 
   webRequest.onBeforeRequest.addListener(cb, filter, ['blocking', ...extraInfo]);
 }
@@ -114,7 +126,7 @@ function blockRequests() {
   }, filter.seenStory, ['requestBody']);
 }
 
-async function resetBlocker() {
+async function resetBlocker(chages, area) {
 
   blockSetting = await storage.get([
     'block_delivery_receipts',
