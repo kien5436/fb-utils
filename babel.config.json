@@ -27,7 +27,6 @@
       }
     ]
   ],
-  "only": ["./src/main"],
   "compact": true,
   "minified": true
 }

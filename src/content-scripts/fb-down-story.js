@@ -7,7 +7,7 @@ import { runtime } from 'webextension-polyfill';
 
     const videos = document.getElementsByTagName('video');
 
-    if (videos.length > 0) {
+    if (0 < videos.length) {
 
       try {
         const script = document.createElement('script');
@@ -27,9 +27,11 @@ import { runtime } from 'webextension-polyfill';
           script.remove();
         }, 300);
       }
-      catch (err) { console.error('fb-down-story.js:26:', err); }
+      catch (err) {
+        console.error('fb-down-story.js:', err);
+      }
     }
 
     port.disconnect();
-  })
+  });
 })();
