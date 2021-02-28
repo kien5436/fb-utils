@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
 import { webRequest } from 'webextension-polyfill';
 
 import storage from '../storage';
@@ -21,8 +23,9 @@ const filter = Object.freeze({
       '*://*.messenger.com/*delivery_receipts*',
       '*://*.facebook.com/*unread_threads*',
       '*://*.messenger.com/*unread_threads*',
-    ]
+    ],
   },
+  fbPixel: { urls: ['https://connect.facebook.net/*'] },
   lastActive: {
     urls: [
       '*://edge-chat.facebook.com/*',
@@ -53,15 +56,26 @@ const filter = Object.freeze({
       '*://www.messenger.com/ajax/chat/*',
       '*://www.messenger.com/chat/*',
       '*://www.messenger.com/ajax/presence/*',
-    ]
+    ],
   },
   linkClickAnalysis: { urls: ['https://*.facebook.com/si/linkclick/ajax_callback/'] },
-  trackingParams: {
-    urls: ['https://*/*', 'http://*/*'],
-    types: ['main_frame']
+  seen: {
+    urls: [
+      '*://*.facebook.com/*change_read_status*',
+      '*://*.messenger.com/*change_read_status*',
+    ],
   },
-  fbPixel: { urls: ['https://connect.facebook.net/*'] },
   seenStory: { urls: ['https://*.facebook.com/api/graphql/*'] },
+  trackingParams: {
+    types: ['main_frame'],
+    urls: ['https://*/*', 'http://*/*'],
+  },
+  typingIndicator: {
+    urls: [
+      '*://*.facebook.com/*typ.php*',
+      '*://*.messenger.com/*typ.php*',
+    ],
+  },
 });
 let blockSetting = {};
 

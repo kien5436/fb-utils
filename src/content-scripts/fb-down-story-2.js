@@ -1,9 +1,9 @@
-var videos = document.getElementsByTagName('video');
-var realVideoSrcClass = '.k4urcfbm l9j0dhe7 datstx6m a8c37x1j du4w35lb'.split(' ').join('.');
-var author = '',
-  videoUrl = '';
+const videos = document.getElementsByTagName('video');
+const realVideoSrcClass = '.k4urcfbm l9j0dhe7 datstx6m a8c37x1j du4w35lb'.split(' ').join('.');
+let author = '';
+let videoUrl = '';
 
-for (let i = videos.length; --i >= 0;) {
+for (let i = videos.length; 0 <= --i;) {
 
   author = videos[i].closest('[data-pagelet="Stories"]').querySelector('a[role="link"] img').alt;
   let realVideoSrc = videos[i].closest(realVideoSrcClass);

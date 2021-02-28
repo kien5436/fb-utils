@@ -1,6 +1,12 @@
 {
   "files.exclude": {
     "**/node_modules/{[^b],?[^u],??[^l],???[^m]}*": true,
+    ".jsbeautifyrc": true,
+    ".gitignore": true,
+    ".eslintrc.json": true,
+    "babel.config.json": true,
+    "INSTRUCTIONS.md": true,
+    "yarn.lock": true
   },
   "path-autocomplete.transformations": [{
     "type": "replace",

@@ -1,38 +1,28 @@
+import observable from './observable';
 import { runtime } from 'webextension-polyfill';
-import debounce from 'lodash/debounce';
 
 (() => {
   const port = runtime.connect({ name: 'fb-stop-next-video' });
   const target = document.body;
-  const upNextOverlayClassList = '.ipxafjjy j1l0snac h9pa7xm5 sbevj9st by8nzva6 jk6sbkaj kdgqqoy6 ihh4hy1g qttc61fc cdjodzko swmj3c3o m1bnnib3 soycq5t1 pedkr2u6 pmk7jnqg eezhb0co'.split(' ').join('.');
-  const observer = new MutationObserver(debounce(stopNextVideo, 250));
+  const lang = document.querySelector('html').getAttribute('lang');
+  const cancel = {
+    labels: {
+      en: 'Cancel',
+      vi: 'Hủy',
+    },
+    subscriber(mutations) { // eslint-disable-line no-unused-vars
+      const videoUrl = /\/.+\/videos\/.+/;
+      const label = this.labels[lang] || this.labels.en;
 
-  port.onMessage.addListener((message) => {
+      if (videoUrl.test(window.location.pathname)) {
 
-    if (message.stop) {
-      observer.observe(target, { childList: true, subtree: true });
-    }
-    else {
-      observer.takeRecords();
-      observer.disconnect();
-    }
-  });
+        const node = document.evaluate(`.//span[text()='${label}']`, target, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
 
-  function stopNextVideo(mutations) {
-
-    const videoUrl = /\/.+\/videos\/.+/;
-
-    if (videoUrl.test(window.location.pathname)) {
-
-      const upNextOverlay = document.querySelector(upNextOverlayClassList);
-
-      if (upNextOverlay) {
-
-        const buttons = upNextOverlay.querySelectorAll('[role="button"]');
-        const cancelBtn = buttons[buttons.length - 1];
-
-        cancelBtn.click();
+        node.singleNodeValue && node.singleNodeValue.click();
       }
-    }
-  }
+    },
+  };
+  const canceller = observable(target, cancel.subscriber.bind(cancel), 250);
+
+  port.onMessage.addListener((message) => canceller(message.stop));
 })();

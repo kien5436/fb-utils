@@ -2,7 +2,7 @@ import { Fragment, h } from 'preact';
 import { useEffect, useState } from 'preact/compat';
 import { i18n } from 'webextension-polyfill';
 
-import './style.scss';
+import './style';
 import { defaultSettings } from '../../../config';
 import storage from '../../../storage';
 
@@ -79,16 +79,22 @@ function Menu() {
         checked: settings.remove_sponsored_ad,
         helpLink,
       },
+      {
+        label: i18n.getMessage('removeSuggestedPosts'),
+        value: 'remove_suggested_for_u',
+        checked: settings.remove_suggested_for_u,
+        helpLink,
+      },
+      {
+        label: i18n.getMessage('removePeopleUMayKnow'),
+        value: 'remove_people_u_may_know',
+        checked: settings.remove_people_u_may_know,
+        helpLink,
+      },
       // {
-      //   label: i18n.getMessage('removeSuggestedPosts'),
-      //   value: 'remove_suggested_for_u',
-      //   checked: settings.remove_suggested_for_u,
-      //   helpLink,
-      // },
-      // {
-      //   label: i18n.getMessage('removePeopleUMayKnow'),
-      //   value: 'remove_people_u_may_know',
-      //   checked: settings.remove_people_u_may_know,
+      //   label: i18n.getMessage('removePostUMayLike'),
+      //   value: 'remove_post_u_may_like',
+      //   checked: settings.remove_post_u_may_like,
       //   helpLink,
       // },
     ],
@@ -101,10 +107,10 @@ function Menu() {
 
     for (let j = 0; j < items.length; j++) {
 
-      menuItems.push(<Checkbox {...items[j]} key={items[j].value} />);
+      menuItems.push(<Checkbox {...items[j]} key={j} />);
     }
 
-    content.push(<SubMenu label={label} key={label}>{menuItems}</SubMenu>);
+    content.push(<SubMenu label={label} key={i}>{menuItems}</SubMenu>);
   }
 
   return (
@@ -131,7 +137,7 @@ function Checkbox({ label, value, checked, helpLink }) {
     <li>
       <label className="checkbox">
         <input type="checkbox" className="option" value={value} checked={checked} onChange={onChange} />
-        <span className="checkbox-pseudo"></span>
+        <span className="checkbox-pseudo" />
         <span>
           {label}
           {helpLink && <a href={helpLink} className="p-0 pl-2 has-text-link" target="_blank" rel="noopener noreferrer">{i18n.getMessage('helpLink')}</a>}

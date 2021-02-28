@@ -1,38 +1,25 @@
+import observable from './observable';
 import { runtime } from 'webextension-polyfill';
-import debounce from 'lodash/debounce';
 
 (() => {
   const port = runtime.connect({ name: 'fb-remove-tracking-params' });
   const trackingParams = ['eid', '__tn__', 'source', 'ref', 'epa', 'ifg', 'comment_tracking', 'av', 'acontext', 'session_id', 'hc_location'];
   const target = document.body;
-  const observer = new MutationObserver(debounce((mutations) => {
+  const tracker = observable(target, removeTrackingParams, 500);
 
-    removeTrackingParams();
-  }, 500));
+  port.onMessage.addListener((message) => tracker(message.remove_tracking_params));
 
-  port.onMessage.addListener((message) => {
-
-    const { remove_tracking_params } = message;
-
-    if (remove_tracking_params) {
-      observer.observe(target, { childList: true, subtree: true });
-    }
-    else {
-      observer.takeRecords();
-      observer.disconnect();
-    }
-  });
-
-  function removeTrackingParams() {
+  // eslint-disable-next-line no-unused-vars
+  function removeTrackingParams(mutations) {
 
     const links = document.querySelectorAll('a[href]:not([target="_blank"]):not(.nospy)');
 
-    for (let i = links.length; --i >= 0;) {
+    for (let i = links.length; 0 <= --i;) {
 
       const link = links[i];
       const url = new URL(decodeURIComponent(link.href));
 
-      for (let j = 0; j < 2; j++) {
+      for (let j = 0; 2 > j; j++) {
 
         url.searchParams.forEach((value, key) => {
 
