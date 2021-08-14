@@ -5,11 +5,11 @@
   src: url(../fonts/Nunito-400.woff2) format('woff2');
 }
 
-@import 'font-awesome';
+// @import 'font-awesome';
 @import '~bulma/sass/utilities/all';
 @import '~bulma/sass/base/minireset';
 
-$isChrome: true;
+$isChrome: false;
 $family-sans-serif: 'Nunito', sans-serif;
 
 html {
@@ -18,9 +18,11 @@ html {
 
 body {
   font-family: $family-sans-serif;
+  padding-top: 1.5em;
 
   @if $isChrome {
-    max-width: 32em;
+    max-width: 34em;
+    min-width: 34em;
   }
 
   @else {
@@ -32,6 +34,7 @@ body {
   max-height: 20em;
   overflow: auto;
   padding: 1.5em;
+  padding-top: 0;
 }
 
 .has-scrollbar {

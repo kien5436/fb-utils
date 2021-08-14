@@ -8,11 +8,11 @@ Adds some awesome features to control Facebook
 - [x] Block "seen" feature of the chat
 - [x] Block the "delivery receipts" feature of the chat
 - [x] Block the typing indicator feature of the chat
-- [x] Remove Facebook's tracking paramenters
 - [x] Block "seen" feature of the story
+- [x] Remove Facebook's tracking paramenters
 - [x] Block Facebook pixel
 - [x] Stop up next video playing automatically
-- [x] And more...
+- [x] Download stories
 
 ## Installation
 - Firefox

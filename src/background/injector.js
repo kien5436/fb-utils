@@ -19,6 +19,22 @@ function listenContentScripts() {
   browserTabs.onUpdated.addListener(debounce(onTabsUpdated, 300));
 }
 
+/**
+ * Help to inject script into webpage
+ * @param {string} scriptContent script's content
+ * @param {Function} callback
+ */
+function inject(scriptContent, callback = null) {
+
+  const script = document.createElement('script');
+  script.innerText = scriptContent;
+
+  document.body.append(script);
+  script.remove();
+
+  if (callback) callback();
+}
+
 async function onConnect(_port) {
 
   switch (_port.name) {
@@ -42,8 +58,9 @@ async function onConnect(_port) {
           'remove_people_u_may_know',
           'remove_post_u_may_like',
         ]);
+        const script = await getScript('content-scripts/fb-remove-ads.js');
 
-        _port.postMessage(settings);
+        _port.postMessage({ script, ...settings });
       }
       catch (err) {
         console.assert('production' === ENV, err);
@@ -62,7 +79,7 @@ async function onConnect(_port) {
       break;
     case 'fb-down-story':
       try {
-        const script = await getScript();
+        const script = await getScript('content-scripts/fb-down-story-2.js');
 
         _port.postMessage({ script });
       }
@@ -81,11 +98,17 @@ function onChanged(changes, area) {
   }
 
   if ((changes.remove_sponsored_ad || changes.remove_people_u_may_know || changes.remove_suggested_for_u) && port.removeAnnoyances) {
-    port.removeAnnoyances.postMessage({
-      remove_people_u_may_know: changes.remove_people_u_may_know.newValue,
-      remove_sponsored_ad: changes.remove_sponsored_ad.newValue,
-      remove_suggested_for_u: changes.remove_suggested_for_u.newValue,
-    });
+
+    const message = {};
+
+    if (changes.remove_people_u_may_know)
+      message.remove_people_u_may_know = changes.remove_people_u_may_know.newValue;
+    if (changes.remove_sponsored_ad)
+      message.remove_sponsored_ad = changes.remove_sponsored_ad.newValue;
+    if (changes.remove_suggested_for_u)
+      message.remove_suggested_for_u = changes.remove_suggested_for_u.newValue;
+
+    port.removeAnnoyances.postMessage(message);
   }
 
   if (changes.remove_tracking_params && port.removeTrackingParams) {
@@ -106,9 +129,9 @@ function onChanged(changes, area) {
   }
 }
 
-async function getScript() {
+async function getScript(path) {
 
-  const res = await fetch(runtime.getURL('content-scripts/fb-down-story-2.js'));
+  const res = await fetch(runtime.getURL(path));
 
   if (res.ok) return await res.text();
   throw new Error(runtime.lastError);
@@ -169,4 +192,4 @@ function onTabsUpdated(tabId, { status: changedStatus }, { status }) {
   }
 }
 
-export { listenContentScripts };
+export { inject, listenContentScripts };

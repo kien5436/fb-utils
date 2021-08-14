@@ -2,7 +2,7 @@ import { storage as browserStorage } from 'webextension-polyfill';
 import isEqual from 'lodash/isEqual';
 import isObject from 'lodash/isObject';
 
-import { ENV, defaultSettings } from './config';
+import { defaultSettings, ENV } from './config';
 
 const storage = 'production' !== ENV ? browserStorage.local : browserStorage.sync;
 
@@ -40,7 +40,9 @@ async function init() {
       await storage.set({ ...newSettings });
     }
   }
-  catch (err) { console.assert('production' === ENV, err); }
+  catch (err) {
+    console.assert('production' === ENV, err);
+  }
 
   function mergeSettings(old, _new) {
 
@@ -64,13 +66,15 @@ async function init() {
     return { newSettings: _new, deprecatedSettings };
   }
 
-  function isObjectLiteral(value) { return isObject(value) && !Array.isArray(value) }
+  function isObjectLiteral(value) {
+    return isObject(value) && !Array.isArray(value)
+  }
 }
 
 export default {
-  init,
   get,
+  init,
+  onChanged: browserStorage.onChanged,
   remove,
   save,
-  onChanged: browserStorage.onChanged,
 }

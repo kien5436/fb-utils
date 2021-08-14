@@ -9,7 +9,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 
-const manifestExtraInfo = require('./src/manifest/manifest-chrome.json');
+const manifestExtraInfo = require('./src/manifest/manifest-ff.json');
 
 module.exports = {
   mode: 'production',
@@ -20,6 +20,7 @@ module.exports = {
     'content-scripts/fb-remove-annoyances': './src/content-scripts/fb-remove-annoyances.js',
     'content-scripts/fb-remove-tracking-params': './src/content-scripts/fb-remove-tracking-params.js',
     'content-scripts/fb-stop-next-video': './src/content-scripts/fb-stop-next-video.js',
+    'content-scripts/fb-remove-ads': './src/content-scripts/fb-remove-ads.js',
     'main/popup': './src/main/popup.jsx',
   },
   output: {
@@ -52,28 +53,28 @@ module.exports = {
     new MiniCssExtractPlugin({ filename: '[name].css' }),
     new CopyWebpackPlugin({
       patterns: [{
-          from: './src/manifest/manifest.json',
-          to: '[name].[ext]',
-          transform(content) {
+        from: './src/manifest/manifest.json',
+        to: '[name].[ext]',
+        transform(content) {
 
-            const manifest = JSON.parse(content.toString());
+          const manifest = JSON.parse(content.toString());
 
-            for (const key in manifestExtraInfo)
-              manifest[key] = manifestExtraInfo[key];
+          for (const key in manifestExtraInfo)
+            manifest[key] = manifestExtraInfo[key];
 
-            return Promise.resolve(JSON.stringify(manifest));
-          },
-          cacheTransform: false,
+          return Promise.resolve(JSON.stringify(manifest));
         },
-        {
-          from: './src/**/messages.json',
-          to: '[path]/[name].[ext]',
-          transformPath: (targetPath) => Promise.resolve(targetPath.replace(/src(\\|\/)/, '')),
-          transform: (content) => Promise.resolve(JSON.stringify(JSON.parse(content.toString()))),
-          cacheTransform: false,
-        },
-        { from: './src/icons/*', to: '[folder]/[name].[ext]', cacheTransform: true },
-        { from: './src/fonts/*.(woff|woff2)', to: '[folder]/[name].[ext]', cacheTransform: true },
+        cacheTransform: false,
+      },
+      {
+        from: './src/**/messages.json',
+        to: '[path]/[name].[ext]',
+        transformPath: (targetPath) => Promise.resolve(targetPath.replace(/src(\\|\/)/, '')),
+        transform: (content) => Promise.resolve(JSON.stringify(JSON.parse(content.toString()))),
+        cacheTransform: false,
+      },
+      { from: './src/icons/*', to: '[folder]/[name].[ext]', cacheTransform: true },
+      { from: './src/fonts/*.woff2', to: '[folder]/[name].[ext]', cacheTransform: true },
       ],
     }),
     new HtmlWebpackPlugin({

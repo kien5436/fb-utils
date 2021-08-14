@@ -1,36 +1,40 @@
-import { runtime } from 'webextension-polyfill';
+import { i18n, runtime } from 'webextension-polyfill';
+
+import { inject } from '../background/injector';
+import storage from '../storage';
 
 (() => {
   const port = runtime.connect({ name: 'fb-down-story' });
 
   port.onMessage.addListener((message) => {
 
-    const videos = document.getElementsByTagName('video');
+    inject(message.script, () => {
 
-    if (0 < videos.length) {
+      setTimeout(async () => {
 
-      try {
-        const script = document.createElement('script');
-        script.innerText = message.script;
+        try {
+          const url = localStorage.getItem('story_url');
 
-        document.body.append(script);
+          if (!url)
+            alert(i18n.getMessage('noStory'));
+          else {
+            const { ctx } = await storage.get('ctx');
 
-        setTimeout(() => {
+            if ('story-downloader' === ctx) {
 
-          const videoUrl = localStorage.story_url;
-          const author = localStorage.author;
+              await runtime.sendMessage({ url });
+            }
+            else if ('story-link' === ctx) {
 
-          runtime.sendMessage({
-            author,
-            videoUrl,
-          });
-          script.remove();
-        }, 300);
-      }
-      catch (err) {
-        console.error('fb-down-story.js:', err);
-      }
-    }
+              window.open(url, '_blank', 'noopener,noreferrer');
+            }
+          }
+        }
+        catch (err) {
+          console.error('fb-down-story.js:', err);
+        }
+      }, 300);
+    });
 
     port.disconnect();
   });

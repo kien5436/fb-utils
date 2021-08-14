@@ -103,7 +103,7 @@ function blockRequests() {
 
       url.searchParams.forEach((value, key) => {
 
-        if ('fbclid' === key || key.includes('utm')) {
+        if ('fbclid' === key || key.includes('utm') || '__tn__' === key || key.includes('__cft')) {
 
           redirect = true;
           url.searchParams.delete(key);

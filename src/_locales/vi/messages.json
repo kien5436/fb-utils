@@ -1,31 +1,77 @@
 {
-  "blockDeliveryReceipts": { "message": "Chặn \"đã gửi\" trong cuộc trò chuyện" },
-  "blockFbPixel": { "message": "Chặn mã theo dõi Facebook pixel" },
-  "blockSeen": { "message": "Chặn \"đã xem\" trong cuộc trò chuyện" },
-  "blockSeenStory": { "message": "Chặn \"đã xem\" trong story" },
-  "blockTypingIndicator": { "message": "Chặn \"đang gõ\" trong cuộc trò chuyện" },
-  "bugReport": { "message": "Báo lỗi" },
-  "caution": { "message": "Các tính năng thử nghiệm có thể gây ra hành vi không mong muốn, hãy cẩn thận khi sử dụng và thoải mái báo cáo lỗi cho mình" },
-  "description": { "message": "Biến Facebook thành của bạn" },
-  "download": { "message": "Tải xuống" },
-  "extensionName": { "message": "Facebook utils" },
-  "fixFont": { "message": "Sửa lỗi font" },
-  "hideActiveStatus": { "message": "Ẩn trạng thái hoạt động" },
-  "menuLabelActivity": { "message": "hoạt động" },
-  "menuLabelOther": { "message": "khác" },
-  "menuLabelPrivacy": { "message": "quyền riêng tư" },
-  "notifVideoList": { "message": "Danh sách này sẽ tồn tại trong 1 giờ" },
-  "noVideo": { "message": "Không có câu chuyện nào có sẵn <br> Hãy thử mở một câu chuyện" },
-  "openLink": { "message": "Mở trong thẻ mới" },
-  "rate": { "message": "Đánh giá cho mình" },
-  "removePeopleUMayKnow": { "message": "Xóa \"Những người bạn có thể biết\" (thử nghiệm)" },
-  "removePostUMayLike": { "message": "Xóa \"Có thể bạn thích\" (thử nghiệm)" },
-  "removeSponsoredAd": { "message": "Xóa \"Quảng cáo được tài trợ\" (thử nghiệm)" },
-  "removeSuggestedPosts": { "message": "Xóa \"Gợi ý cho bạn\" (thử nghiệm)" },
-  "removeTrackingParams": { "message": "Loại bỏ tham số theo dõi khỏi liên kết" },
-  "retrievingVideo": { "message": "Đang lấy video..." },
-  "stopUpNextVideo": { "message": "Chặn tự động phát video tiếp theo" },
-  "storyAuthor": { "message": "Câu chuyện của $author$", "placeholders": { "author": { "content": "$1" } } },
-  "tabDownload": { "message": "Tải câu chuyện Facebook" },
-  "tabOptions": { "message": "Tùy chọn" }
+  "blockDeliveryReceipts": {
+    "message": "Chặn \"đã gửi\" trong cuộc trò chuyện"
+  },
+  "blockFbPixel": {
+    "message": "Chặn mã theo dõi Facebook pixel"
+  },
+  "blockSeen": {
+    "message": "Chặn \"đã xem\" trong cuộc trò chuyện"
+  },
+  "blockSeenStory": {
+    "message": "Chặn \"đã xem\" trong story"
+  },
+  "blockTypingIndicator": {
+    "message": "Chặn \"đang gõ\" trong cuộc trò chuyện"
+  },
+  "bugReport": {
+    "message": "Báo lỗi"
+  },
+  "caution": {
+    "message": "Các tính năng thử nghiệm có thể gây ra hành vi không mong muốn, hãy cẩn thận khi sử dụng và thoải mái báo cáo lỗi cho mình"
+  },
+  "description": {
+    "message": "Biến Facebook thành của bạn"
+  },
+  "downloadStory": {
+    "message": "Tải xuống câu chuyện này"
+  },
+  "extensionName": {
+    "message": "Facebook utils"
+  },
+  "fixFont": {
+    "message": "Sửa lỗi font"
+  },
+  "hideActiveStatus": {
+    "message": "Ẩn trạng thái hoạt động"
+  },
+  "menuLabelActivity": {
+    "message": "hoạt động"
+  },
+  "menuLabelOther": {
+    "message": "khác"
+  },
+  "menuLabelPrivacy": {
+    "message": "quyền riêng tư"
+  },
+  "noStory": {
+    "message": "Không thể tải câu chuyện. Hãy thử lại sau"
+  },
+  "openStory": {
+    "message": "Mở câu chuyện này trong thẻ mới"
+  },
+  "rate": {
+    "message": "Đánh giá cho mình"
+  },
+  "removePeopleUMayKnow": {
+    "message": "Xóa \"Những người bạn có thể biết\" (thử nghiệm)"
+  },
+  "removePostUMayLike": {
+    "message": "Xóa \"Có thể bạn thích\" (thử nghiệm)"
+  },
+  "removeSponsoredAd": {
+    "message": "Xóa \"Quảng cáo được tài trợ\" (thử nghiệm)"
+  },
+  "removeSuggestedPosts": {
+    "message": "Xóa \"Gợi ý cho bạn\" (thử nghiệm)"
+  },
+  "removeTrackingParams": {
+    "message": "Loại bỏ tham số theo dõi khỏi liên kết"
+  },
+  "stopUpNextVideo": {
+    "message": "Chặn tự động phát video tiếp theo"
+  },
+  "tabOptions": {
+    "message": "Tùy chọn"
+  }
 }

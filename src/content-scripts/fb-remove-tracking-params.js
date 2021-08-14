@@ -3,7 +3,7 @@ import { runtime } from 'webextension-polyfill';
 
 (() => {
   const port = runtime.connect({ name: 'fb-remove-tracking-params' });
-  const trackingParams = ['eid', '__tn__', 'source', 'ref', 'epa', 'ifg', 'comment_tracking', 'av', 'acontext', 'session_id', 'hc_location'];
+  const trackingParams = ['eid', '__tn__', 'source', 'ref', 'fref', 'epa', 'ifg', 'comment_tracking', 'av', 'acontext', 'session_id', 'hc_location'];
   const target = document.body;
   const tracker = observable(target, removeTrackingParams, 500);
 
@@ -19,16 +19,13 @@ import { runtime } from 'webextension-polyfill';
       const link = links[i];
       const url = new URL(decodeURIComponent(link.href));
 
-      for (let j = 0; 2 > j; j++) {
+      url.searchParams.forEach((value, key) => {
 
-        url.searchParams.forEach((value, key) => {
+        if (trackingParams.includes(key) || key.includes('__xts__') || key.includes('__cft')) {
 
-          if (trackingParams.includes(key) || key.includes('__xts__') || key.includes('__cft__')) {
-
-            url.searchParams.delete(key);
-          }
-        });
-      }
+          url.searchParams.delete(key);
+        }
+      });
 
       link.href = url.href;
       link.classList.add('nospy');

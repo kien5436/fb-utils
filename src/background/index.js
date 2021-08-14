@@ -2,6 +2,7 @@ import { runtime } from 'webextension-polyfill';
 
 import { blockRequests, resetBlocker } from './blocker';
 import { ENV } from '../config';
+import { initContextMenus } from './context-menus';
 import { listenContentScripts } from './injector';
 import storage from '../storage';
 
@@ -16,13 +17,12 @@ runtime.onInstalled.addListener(({ reason }) => {
 });
 listenContentScripts();
 storage.onChanged.addListener(resetBlocker);
+initContextMenus();
 
 (async () => {
   try {
     await resetBlocker();
     blockRequests();
-
-    storage.remove('videos');
   }
   catch (err) {
     console.assert('production' === ENV, 'index.js:', err);

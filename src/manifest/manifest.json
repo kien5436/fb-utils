@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "__MSG_description__",
   "author": "Phạm Trung Kiên",
   "icons": {
@@ -16,7 +16,8 @@
     "storage",
     "tabs",
     "webRequest",
-    "webRequestBlocking"
+    "webRequestBlocking",
+    "contextMenus"
   ],
   "browser_action": {
     "default_popup": "main/popup.html",
@@ -30,30 +31,45 @@
       "background.js"
     ]
   },
-  "content_scripts": [{
-    "matches": ["https://*/*", "http://*/*"],
-    "js": [
-      "libs/utils.js",
-      "libs/common.js"
-    ]
-  }, {
-    "matches": ["https://*.facebook.com/*"],
-    "js": [
-      "libs/utils.js",
-      "content-scripts/fb-stop-next-video.js"
-    ]
-  }, {
-    "matches": ["https://*.facebook.com/*"],
-    "js": [
-      "libs/utils.js",
-      "content-scripts/fb-remove-annoyances.js"
-    ]
-  }, {
-    "matches": ["https://*/*", "http://*/*"],
-    "js": [
-      "libs/utils.js",
-      "content-scripts/fb-remove-tracking-params.js"
-    ],
-    "run_at": "document_end"
-  }]
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "libs/utils.js",
+        "libs/common.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/*"
+      ],
+      "js": [
+        "libs/utils.js",
+        "content-scripts/fb-stop-next-video.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/*"
+      ],
+      "js": [
+        "libs/utils.js",
+        "content-scripts/fb-remove-annoyances.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "libs/utils.js",
+        "content-scripts/fb-remove-tracking-params.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
 }
