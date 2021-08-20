@@ -5,7 +5,6 @@
   src: url(../fonts/Nunito-400.woff2) format('woff2');
 }
 
-// @import 'font-awesome';
 @import '~bulma/sass/utilities/all';
 @import '~bulma/sass/base/minireset';
 
@@ -21,12 +20,7 @@ body {
   padding-top: 1.5em;
 
   @if $isChrome {
-    max-width: 34em;
-    min-width: 34em;
-  }
-
-  @else {
-    max-width: 24em;
+    width: 34em;
   }
 }
 

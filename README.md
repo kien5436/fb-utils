@@ -5,9 +5,9 @@ Adds some awesome features to control Facebook
 [![Build Status](https://img.shields.io/amo/v/facebook-utils?color=brightgreen&label=add-on&style=for-the-badge)](https://addons.mozilla.org/en-US/firefox/addon/facebook-utils/)
 
 ## Features
-- [x] Block "seen" feature of the chat
-- [x] Block the "delivery receipts" feature of the chat
-- [x] Block the typing indicator feature of the chat
+- [ ] Block "seen" feature of the chat
+- [ ] Block the "delivery receipts" feature of the chat
+- [ ] Block the typing indicator feature of the chat
 - [x] Block "seen" feature of the story
 - [x] Remove Facebook's tracking paramenters
 - [x] Block Facebook pixel

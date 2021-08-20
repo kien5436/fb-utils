@@ -54,16 +54,16 @@
     "message": "Đánh giá cho mình"
   },
   "removePeopleUMayKnow": {
-    "message": "Xóa \"Những người bạn có thể biết\" (thử nghiệm)"
+    "message": "Xóa \"Những người bạn có thể biết\""
   },
   "removePostUMayLike": {
-    "message": "Xóa \"Có thể bạn thích\" (thử nghiệm)"
+    "message": "Xóa \"Có thể bạn thích\""
   },
   "removeSponsoredAd": {
-    "message": "Xóa \"Quảng cáo được tài trợ\" (thử nghiệm)"
+    "message": "Xóa \"Quảng cáo được tài trợ\""
   },
   "removeSuggestedPosts": {
-    "message": "Xóa \"Gợi ý cho bạn\" (thử nghiệm)"
+    "message": "Xóa \"Gợi ý cho bạn\""
   },
   "removeTrackingParams": {
     "message": "Loại bỏ tham số theo dõi khỏi liên kết"

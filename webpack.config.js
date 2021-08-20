@@ -21,6 +21,7 @@ module.exports = {
     'content-scripts/fb-remove-tracking-params': './src/content-scripts/fb-remove-tracking-params.js',
     'content-scripts/fb-stop-next-video': './src/content-scripts/fb-stop-next-video.js',
     'content-scripts/fb-remove-ads': './src/content-scripts/fb-remove-ads.js',
+    'content-scripts/fb-see-more': './src/content-scripts/fb-see-more.js',
     'main/popup': './src/main/popup.jsx',
   },
   output: {

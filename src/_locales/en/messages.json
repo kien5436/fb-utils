@@ -57,16 +57,16 @@
     "message": "Rate me"
   },
   "removePeopleUMayKnow": {
-    "message": "Remove \"People you may know\" (experimental)"
+    "message": "Remove \"People you may know\""
   },
   "removePostUMayLike": {
-    "message": "Remove \"Post you may like\" (experimental)"
+    "message": "Remove \"Post you may like\""
   },
   "removeSponsoredAd": {
-    "message": "Remove \"Sponsored ads\" (experimental)"
+    "message": "Remove \"Sponsored ads\""
   },
   "removeSuggestedPosts": {
-    "message": "Remove \"Suggested for you\" posts (experimental)"
+    "message": "Remove \"Suggested for you\" posts"
   },
   "removeTrackingParams": {
     "message": "Remove tracking parameters from link"

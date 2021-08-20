@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "description": "__MSG_description__",
   "author": "Phạm Trung Kiên",
   "icons": {
@@ -62,12 +62,10 @@
     },
     {
       "matches": [
-        "https://*/*",
-        "http://*/*"
+        "https://*.facebook.com/*"
       ],
       "js": [
-        "libs/utils.js",
-        "content-scripts/fb-remove-tracking-params.js"
+        "content-scripts/fb-see-more.js"
       ],
       "run_at": "document_end"
     }

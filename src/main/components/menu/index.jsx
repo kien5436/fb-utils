@@ -25,21 +25,21 @@ function Menu() {
   const subMenus = [{
     label: i18n.getMessage('menuLabelActivity'),
     items: [
-      {
-        label: i18n.getMessage('blockSeen'),
-        value: 'block_seen',
-        checked: settings.block_seen,
-      },
-      {
-        label: i18n.getMessage('blockDeliveryReceipts'),
-        value: 'block_delivery_receipts',
-        checked: settings.block_delivery_receipts,
-      },
-      {
-        label: i18n.getMessage('blockTypingIndicator'),
-        value: 'block_typing_indicator',
-        checked: settings.block_typing_indicator,
-      },
+      // {
+      //   label: i18n.getMessage('blockSeen'),
+      //   value: 'block_seen',
+      //   checked: settings.block_seen,
+      // },
+      // {
+      //   label: i18n.getMessage('blockDeliveryReceipts'),
+      //   value: 'block_delivery_receipts',
+      //   checked: settings.block_delivery_receipts,
+      // },
+      // {
+      //   label: i18n.getMessage('blockTypingIndicator'),
+      //   value: 'block_typing_indicator',
+      //   checked: settings.block_typing_indicator,
+      // },
       {
         label: i18n.getMessage('blockSeenStory'),
         value: 'block_seen_story',
@@ -116,7 +116,6 @@ function Menu() {
   return (
     <div className="menu has-scrollbar">
       {content}
-      <p className="is-size-7 has-text-danger mt-4">{i18n.getMessage('caution')}</p>
     </div>
   );
 }
