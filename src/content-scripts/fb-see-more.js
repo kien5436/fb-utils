@@ -1,9 +1,12 @@
+import { component } from './dom';
+
 document.addEventListener('click', (e) => {
 
-  const sees = ['See More', 'Xem thêm'];
+  const sees = ['See More', 'Xem Thêm'];
 
-  if (!sees.includes(e.target.innerText)) return;
+  if (!sees.includes(e.target.innerText) || !e.target.closest('[data-ad-preview]')) return;
 
+  /** @type HTMLElement */
   const wrapper = e.target.closest('span');
   const className = e.target.className;
 
@@ -13,14 +16,27 @@ document.addEventListener('click', (e) => {
       children: 'See less',
       class: className,
       'data-toggle': true,
-      onclick() {
+      onClick() {
 
-        wrapper.childNodes.forEach((node, i) => {
+        if (3 <= wrapper.childNodes.length) {
 
-          if (0 < i && !node.dataset.toggle) {
-            node.style.setProperty('display', 'none' === node.style.display ? 'unset' : 'none', 'important');
-          }
-        });
+          wrapper.childNodes.forEach((node, i) => {
+
+            if (0 < i && !node.dataset.toggle) {
+              node.style.setProperty('display', 'none' === node.style.display ? 'unset' : 'none', 'important');
+            }
+          });
+        }
+        else {
+
+          wrapper.firstElementChild.childNodes.forEach((node, i) => {
+
+            if (0 < i && !node.dataset.toggle) {
+              node.style.setProperty('display', 'none' === node.style.display ? 'unset' : 'none', 'important');
+            }
+          });
+        }
+
         toggle.innerText = 'See less' !== toggle.innerText ? 'See less' : 'See more';
       },
     });
@@ -28,54 +44,3 @@ document.addEventListener('click', (e) => {
     wrapper.append(toggle);
   }, 50);
 }, false);
-
-/**
- * @param {string} name HTML tag
- * @param {{ children?: HTMLElement | HTMLElement[] | string | string[] }} attributes
- */
-function component(name, attributes = {}) {
-
-  const el = document.createElement(name);
-
-  for (const key in attributes) {
-
-    if (attributes.hasOwnProperty(key) && 'children' !== key) {
-
-      const attr = attributes[key];
-
-      if ('function' === typeof attr && key.startsWith('on')) {
-        el.addEventListener(key.substring(2).toLowerCase(), attr, false);
-      }
-      else if ('boolean' === typeof attr && attr) {
-        el.setAttribute(key, key);
-      }
-      else el.setAttribute(key, attr.toString());
-    }
-  }
-
-  const children = attributes.children;
-
-  if (children) {
-
-    if (children instanceof HTMLElement) {
-      el.append(children);
-    }
-    else if (Array.isArray(children)) {
-
-      for (const child of children) {
-
-        if (child instanceof HTMLElement) {
-          el.append(child);
-        }
-        else {
-          el.append(document.createTextNode(child.toString()));
-        }
-      }
-    }
-    else {
-      el.append(document.createTextNode(children.toString()));
-    }
-  }
-
-  return el;
-}
