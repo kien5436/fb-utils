@@ -1,37 +1,57 @@
-## Welcome to GitHub Pages
+# Facebook utils
+Adds some awesome features to control Facebook
 
-You can use the [editor on GitHub](https://github.com/kien5436/fb-utils/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## Build status
+[![Build Status](https://img.shields.io/amo/v/facebook-utils?color=brightgreen&label=add-on&style=for-the-badge)](https://addons.mozilla.org/en-US/firefox/addon/facebook-utils/)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Features
+- [ ] Block "seen" feature of the chat
+- [ ] Block the "delivery receipts" feature of the chat
+- [ ] Block the typing indicator feature of the chat
+- [x] Block "seen" feature of the story
+- [x] Remove Facebook's tracking paramenters
+- [x] Block Facebook pixel
+- [x] Stop up next video playing automatically
+- [x] Download stories
 
-### Markdown
+## Installation
+- Firefox
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+Go to [AMO](https://addons.mozilla.org/en-US/firefox/addon/facebook-utils) page and click "Add to Firefox" button
+- Chrome
 ```
+coming soon
+```
+- Install from file (Chrome and Edge Chromium)
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+  - Download the latest `.crx` from [this link](https://github.com/shhlkien/fb-utils/releases)
+  - Open `chrome://extensions/` (`edge://extensions`) tab, drag and drop the downloaded file to this page
+  - If you see a message similar "Extensions Disabled", unpack `.crx` file then choose `Load unpacked`
 
-### Jekyll Themes
+## Contribution and support
+- This extension is FOSS, you can view, fork and contribute it
+- If you find any issue or want to improve this extension, please post your problem [here](https://github.com/shhlkien/fb-utils/issues)
+- If you find this add-on useful, you can [rate it](https://addons.mozilla.org/en-US/developers/addon/facebook-utils) and share it with your friends
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/kien5436/fb-utils/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## License
+The MIT License
 
-### Support or Contact
+Copyright (c) [Phạm Trung Kiên]()
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
